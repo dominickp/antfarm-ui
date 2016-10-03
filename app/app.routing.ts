@@ -15,7 +15,7 @@ const appRoutes: Routes = [
         component: DashboardComponent
     },
     {
-        path: 'detail/:id',
+        path: 'route/:id',
         component: HookDetailComponent
     },
     {

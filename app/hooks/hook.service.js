@@ -26,9 +26,16 @@ var HookService = (function () {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
-    HookService.prototype.getHero = function (id) {
+    // protected findHook(hook) {
+    //     return hook.id === 'cherries';
+    // }
+    HookService.prototype.getHook = function (id) {
         return this.getHooks()
-            .then(function (hooks) { return hooks.find(function (hook) { return hook.id === id; }); });
+            .then(function (hooks) {
+            return hooks.find(function (hook, index, hooks) {
+                return hook.id == id;
+            });
+        });
     };
     HookService = __decorate([
         core_1.Injectable(), 

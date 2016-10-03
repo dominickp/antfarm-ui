@@ -1,7 +1,8 @@
 export class Hook {
-    id: number;
+    id: string;
     path: string;
     nest: string;
     tunnel: string;
     interface_path: string;
+    methods: Object;
 }

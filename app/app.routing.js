@@ -13,7 +13,7 @@ var appRoutes = [
         component: dashboard_component_1.DashboardComponent
     },
     {
-        path: 'detail/:id',
+        path: 'route/:id',
         component: hook_detail_component_1.HookDetailComponent
     },
     {

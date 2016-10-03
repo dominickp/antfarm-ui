@@ -22,14 +22,11 @@ var HooksComponent = (function () {
         var _this = this;
         this.hookService.getHooks().then(function (hooks) { return _this.hooks = hooks; });
     };
-    HooksComponent.prototype.onSelect = function (hook) {
-        this.selectedHook = hook;
-    };
     HooksComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'available-hooks',
-            template: "\n        <my-hook-detail [hook]=\"selectedHook\"></my-hook-detail>\n\n      <h2>My Hooks</h2>\n        <ul class=\"hooks list-group\">\n          <li *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            (click)=\"onSelect(hook)\">\n            <span class=\"badge\">{{hook.id}}</span> {{hook.nest}}\n          </li>\n        </ul>\n      ",
+            template: "\n        <my-hook-detail [hook]=\"selectedHook\"></my-hook-detail>\n\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{hook.id}}\">\n            <span class=\"badge\">{{hook.id}}</span> {{hook.nest}}\n          </a>\n        </div>\n      ",
             styles: [],
             providers: [hook_service_1.HookService]
         }), 

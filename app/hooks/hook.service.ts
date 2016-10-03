@@ -4,12 +4,13 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Hook } from './hook';
-import { HEROES } from './mock-heroes';
 
 @Injectable()
 export class HookService {
 
     private heroesUrl = 'http://localhost:8081/hooks';  // URL to web api
+
+    private hooksCache: Hook[];
 
     constructor(private http: Http) { }
 
@@ -25,9 +26,17 @@ export class HookService {
         return Promise.reject(error.message || error);
     }
 
-    getHero(id: number): Promise<Hook> {
+    // protected findHook(hook) {
+    //     return hook.id === 'cherries';
+    // }
+
+    getHook(id: string): Promise<Hook> {
         return this.getHooks()
-            .then(hooks => hooks.find(hook => hook.id === id));
+            .then((hooks) => {
+                return hooks.find((hook, index, hooks) => {
+                    return hook.id == id;
+                });
+            });
     }
 
 }

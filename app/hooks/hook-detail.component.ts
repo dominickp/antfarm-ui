@@ -15,6 +15,7 @@ import { Hook } from './hook';
         <div><label>nest: </label>{{hook.nest}}</div>
         <div><label>tunnel: </label>{{hook.tunnel}}</div>
         <div><label>interface_path: </label>{{hook.interface_path}}</div>
+        <div><label>methods: </label>{{hook.methods.toString()}}</div>
       </div>
     `
 })
@@ -28,9 +29,9 @@ export class HookDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            let id = +params['id'];
-            // this.heroService.getHero(id)
-            //     .then(hero => this.hero = hero);
+            let id = params['id'];
+            this.hookService.getHook(id)
+                .then(hook => this.hook = hook);
         });
     }
 
