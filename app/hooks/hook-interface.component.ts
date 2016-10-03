@@ -14,9 +14,24 @@ import { HookInterface } from './hook-interface';
         
             <div *ngFor="let field of hookInterface.fields" class="form-group">
                 <label htmlFor="{{field.id}}">{{field.name}}</label>
-                <input type="text" class="form-control" id="{{field.id}}" placeholder="{{field.placeholder}}"
-                    name="{{field.id}}"
-                    [(ngModel)]="field.value">
+                
+                    
+                    <div [ngSwitch]="field.type">
+                        <input *ngSwitchCase="'text'" type="text" class="form-control" id="{{field.id}}" 
+                        placeholder="{{field.placeholder}}" name="{{field.id}}"
+                        [(ngModel)]="field.value">
+                        
+                        <input *ngSwitchCase="'file'" type="file" class="form-control" id="{{field.id}}" 
+                        placeholder="{{field.placeholder}}" name="{{field.id}}"
+                        [(ngModel)]="field.value">
+            
+                        <div *ngSwitchDefault="" class="alert alert-danger" role="alert">
+                            <strong>Error!</strong> Field type "{{field.type}}" is not supported.
+                        </div>
+                      
+                    </div>
+                    
+                    
             </div>
             
             <button type="submit" class="btn btn-default">Submit</button>

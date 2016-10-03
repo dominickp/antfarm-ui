@@ -62,10 +62,20 @@ export class HookService {
             }
         });
 
-        return this.http.get(this.host + hook.path, {search: params})
-            .toPromise()
-            .then(response => response.json())
-            .catch(this.handleError);
+        if(hook.methods.get === true){
+            return this.http.get(this.host + hook.path, {search: params})
+                .toPromise()
+                .then(response => response.json())
+                .catch(this.handleError);
+        } else if (hook.methods.post === true){
+            return this.http.get(this.host + hook.path, {search: params})
+                .toPromise()
+                .then(response => response.json())
+                .catch(this.handleError);
+        } else {
+            throw "Unsupported HTTP method. " + hook.methods.toString()
+        }
+
     }
 
 }

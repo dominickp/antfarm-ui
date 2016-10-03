@@ -4,5 +4,5 @@ export class Hook {
     nest: string;
     tunnel: string;
     interface_path: string;
-    methods: Object;
+    methods: any;
 }

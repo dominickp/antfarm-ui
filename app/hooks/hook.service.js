@@ -56,10 +56,21 @@ var HookService = (function () {
                 params.set(field.id, field.value);
             }
         });
-        return this.http.get(this.host + hook.path, { search: params })
-            .toPromise()
-            .then(function (response) { return response.json(); })
-            .catch(this.handleError);
+        if (hook.methods.get === true) {
+            return this.http.get(this.host + hook.path, { search: params })
+                .toPromise()
+                .then(function (response) { return response.json(); })
+                .catch(this.handleError);
+        }
+        else if (hook.methods.post === true) {
+            return this.http.get(this.host + hook.path, { search: params })
+                .toPromise()
+                .then(function (response) { return response.json(); })
+                .catch(this.handleError);
+        }
+        else {
+            throw "Unsupported HTTP method. " + hook.methods.toString();
+        }
     };
     HookService = __decorate([
         core_1.Injectable(), 
