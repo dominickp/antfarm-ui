@@ -14,8 +14,8 @@ var common_1 = require('@angular/common');
 var hook_service_1 = require('./hook.service');
 var hook_1 = require('./hook');
 var HookDetailComponent = (function () {
-    function HookDetailComponent(heroService, route, location) {
-        this.heroService = heroService;
+    function HookDetailComponent(hookService, route, location) {
+        this.hookService = hookService;
         this.route = route;
         this.location = location;
     }
@@ -29,11 +29,11 @@ var HookDetailComponent = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', hook_1.Hook)
-    ], HookDetailComponent.prototype, "hero", void 0);
+    ], HookDetailComponent.prototype, "hook", void 0);
     HookDetailComponent = __decorate([
         core_1.Component({
-            selector: 'my-hero-detail',
-            template: "\n      <div *ngIf=\"hero\">\n        <h2>{{hero.path}} details!</h2>\n        <div><label>id: </label>{{hero.id}}</div>\n        <div>\n          <label>name: </label>\n          <input [(ngModel)]=\"hero.name\" placeholder=\"name\"/>\n        </div>\n      </div>\n    "
+            selector: 'my-hook-detail',
+            template: "\n      <div *ngIf=\"hook\">\n        <h2>{{hook.path}} details!</h2>\n        <div><label>id: </label>{{hook.id}}</div>\n        <div><label>path: </label>{{hook.path}}</div>\n        <div><label>nest: </label>{{hook.nest}}</div>\n        <div><label>tunnel: </label>{{hook.tunnel}}</div>\n        <div><label>interface_path: </label>{{hook.interface_path}}</div>\n      </div>\n    "
         }), 
         __metadata('design:paramtypes', [hook_service_1.HookService, router_1.ActivatedRoute, common_1.Location])
     ], HookDetailComponent);

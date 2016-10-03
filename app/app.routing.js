@@ -1,8 +1,8 @@
 "use strict";
 var router_1 = require('@angular/router');
-var hooks_component_1 = require('./hooks.component');
+var hooks_component_1 = require('./hooks/hooks.component');
 var dashboard_component_1 = require('./dashboard.component');
-var hook_detail_component_1 = require('./hook-detail.component');
+var hook_detail_component_1 = require('./hooks/hook-detail.component');
 var appRoutes = [
     {
         path: 'hooks',

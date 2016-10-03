@@ -1,9 +1,9 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HooksComponent }      from './hooks.component';
+import { HooksComponent }      from './hooks/hooks.component';
 import { DashboardComponent }      from './dashboard.component';
-import { HookDetailComponent }      from './hook-detail.component';
+import { HookDetailComponent }      from './hooks/hook-detail.component';
 
 const appRoutes: Routes = [
     {

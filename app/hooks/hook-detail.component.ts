@@ -6,22 +6,22 @@ import { HookService } from './hook.service';
 import { Hook } from './hook';
 
 @Component({
-    selector: 'my-hero-detail',
+    selector: 'my-hook-detail',
     template: `
-      <div *ngIf="hero">
-        <h2>{{hero.path}} details!</h2>
-        <div><label>id: </label>{{hero.id}}</div>
-        <div>
-          <label>name: </label>
-          <input [(ngModel)]="hero.name" placeholder="name"/>
-        </div>
+      <div *ngIf="hook">
+        <h2>{{hook.path}} details!</h2>
+        <div><label>id: </label>{{hook.id}}</div>
+        <div><label>path: </label>{{hook.path}}</div>
+        <div><label>nest: </label>{{hook.nest}}</div>
+        <div><label>tunnel: </label>{{hook.tunnel}}</div>
+        <div><label>interface_path: </label>{{hook.interface_path}}</div>
       </div>
     `
 })
 
 export class HookDetailComponent implements OnInit {
     constructor(
-        private heroService: HookService,
+        private hookService: HookService,
         private route: ActivatedRoute,
         private location: Location
     ) {}
@@ -35,5 +35,5 @@ export class HookDetailComponent implements OnInit {
     }
 
     @Input()
-    hero: Hook;
+    hook: Hook;
 }
