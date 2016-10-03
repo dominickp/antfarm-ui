@@ -27,7 +27,7 @@ var HookDetailComponent = (function () {
                 .then(function (hook) {
                 _this.hook = hook;
                 console.log(_this.hook);
-                _this.hookService.getHookInterface(_this.hook.interface_path)
+                _this.hookService.getHookInterface(hook.interface_path)
                     .then(function (hookInterface) {
                     _this.hookInterface = hookInterface;
                     console.log("getting interface", hookInterface);
@@ -42,7 +42,7 @@ var HookDetailComponent = (function () {
     HookDetailComponent = __decorate([
         core_1.Component({
             selector: 'my-hook-detail',
-            template: "\n      <div *ngIf=\"hook\">\n        <h2>{{hook.path}} details!</h2>\n        <div><label>id: </label>{{hook.id}}</div>\n        <div><label>path: </label>{{hook.path}}</div>\n        <div><label>nest: </label>{{hook.nest}}</div>\n        <div><label>tunnel: </label>{{hook.tunnel}}</div>\n        <div><label>interface_path: </label>{{hook.interface_path}}</div>\n        <div><label>methods: </label>{{hook.methods}}</div>\n      </div>\n      <div *ngIf=\"hookInterface\">\n        <h2>Interface definition resolved!</h2>\n        <hook-interface [hookInterface]=\"hookInterface\" [hook]=\"hook\"></hook-interface>\n      </div>\n    "
+            template: "\n        <div class=\"row\">\n            <div *ngIf=\"hookInterface\" class=\"col-md-8\">\n                <h2>Hook Interface</h2>\n                <hook-interface [hookInterface]=\"hookInterface\" [hook]=\"hook\"></hook-interface>\n            </div>\n            <div *ngIf=\"hook\" class=\"col-md-4\">\n                <h2>Details</h2>\n                <div><label>id: </label>{{hook.id}}</div>\n                <div><label>path: </label>{{hook.path}}</div>\n                <div><label>interface_path: </label>{{hook.interface_path}}</div>\n                <div><label>nest: </label>{{hook.nest}}</div>\n                <div><label>tunnel: </label>{{hook.tunnel}}</div>\n                <div><label>methods: </label>{{hook.methods}}</div>\n            </div>\n        </div>\n    "
         }), 
         __metadata('design:paramtypes', [hook_service_1.HookService, router_1.ActivatedRoute, common_1.Location])
     ], HookDetailComponent);

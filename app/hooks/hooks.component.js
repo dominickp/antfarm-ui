@@ -26,7 +26,7 @@ var HooksComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'available-hooks',
-            template: "\n        <my-hook-detail [hook]=\"selectedHook\"></my-hook-detail>\n\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{hook.id}}\">\n            <span class=\"badge\">{{hook.id}}</span> {{hook.nest}}\n          </a>\n        </div>\n      ",
+            template: "\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{hook.id}}\">\n            <span class=\"badge\">{{hook.id}}</span> {{hook.nest}}\n          </a>\n        </div>\n      ",
             styles: [],
             providers: [hook_service_1.HookService]
         }), 

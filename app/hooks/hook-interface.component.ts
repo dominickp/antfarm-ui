@@ -21,9 +21,9 @@ import { HookInterface } from './hook-interface';
                         placeholder="{{field.placeholder}}" name="{{field.id}}"
                         [(ngModel)]="field.value">
                         
-                        <input *ngSwitchCase="'file'" type="file" class="form-control" id="{{field.id}}" 
-                        placeholder="{{field.placeholder}}" name="{{field.id}}"
-                        [(ngModel)]="field.value">
+                        <!--<input *ngSwitchCase="'file'" type="file" class="form-control" id="{{field.id}}" -->
+                        <!--placeholder="{{field.placeholder}}" name="{{field.id}}"-->
+                        <!--[(ngModel)]="field.value">-->
             
                         <div *ngSwitchDefault="" class="alert alert-danger" role="alert">
                             <strong>Error!</strong> Field type "{{field.type}}" is not supported.

@@ -8,8 +8,6 @@ import { HookService } from './hook.service';
     moduleId: module.id,
     selector: 'available-hooks',
     template:`
-        <my-hook-detail [hook]="selectedHook"></my-hook-detail>
-
       <h2>My Hooks</h2>
         <div class="hooks list-group">
           <a *ngFor="let hook of hooks" class="list-group-item" 
