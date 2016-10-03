@@ -16,11 +16,11 @@ import { HookInterface } from './hook-interface';
         <div><label>nest: </label>{{hook.nest}}</div>
         <div><label>tunnel: </label>{{hook.tunnel}}</div>
         <div><label>interface_path: </label>{{hook.interface_path}}</div>
-        <div><label>methods: </label>{{hook.methods.toString()}}</div>
+        <div><label>methods: </label>{{hook.methods}}</div>
       </div>
       <div *ngIf="hookInterface">
         <h2>Interface definition resolved!</h2>
-        <hook-interface [hookInterface]="hookInterface"></hook-interface>
+        <hook-interface [hookInterface]="hookInterface" [hook]="hook"></hook-interface>
       </div>
     `
 })
@@ -39,10 +39,11 @@ export class HookDetailComponent implements OnInit {
                 .then((hook) => {
                     this.hook = hook;
 
+                    console.log(this.hook);
                     this.hookService.getHookInterface(this.hook.interface_path)
                         .then(hookInterface => {
                             this.hookInterface = hookInterface;
-                            // console.log("getting interface", hookInterface);
+                             console.log("getting interface", hookInterface);
                         });
                 });
         });

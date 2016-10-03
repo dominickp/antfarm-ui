@@ -14,8 +14,8 @@ require('rxjs/add/operator/toPromise');
 var HookService = (function () {
     function HookService(http) {
         this.http = http;
-        this.host = "http://localhost:8081/";
-        this.hooks_path = 'hooks'; // URL to web api
+        this.host = "http://localhost:8081";
+        this.hooks_path = '/hooks'; // URL to web api
     }
     HookService.prototype.getHooks = function () {
         return this.http.get(this.host + this.hooks_path)
@@ -40,6 +40,23 @@ var HookService = (function () {
     };
     HookService.prototype.getHookInterface = function (interface_path) {
         return this.http.get(this.host + interface_path)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    /**
+     * Make hook HTTP request.
+     * @param hookInterface
+     */
+    HookService.prototype.makeRequest = function (hookInterface, hook) {
+        var fields = hookInterface.fields;
+        var params = new http_1.URLSearchParams();
+        fields.forEach(function (field) {
+            if (field.value) {
+                params.set(field.id, field.value);
+            }
+        });
+        return this.http.get(this.host + hook.path, { search: params })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);

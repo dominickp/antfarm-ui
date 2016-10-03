@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,8 +9,8 @@ import {HookInterface} from "./hook-interface";
 @Injectable()
 export class HookService {
 
-    private host = "http://localhost:8081/";
-    private hooks_path = 'hooks';  // URL to web api
+    private host = "http://localhost:8081";
+    private hooks_path = '/hooks';  // URL to web api
 
     private hooksCache: Hook[];
 
@@ -45,6 +45,26 @@ export class HookService {
         return this.http.get(this.host + interface_path)
             .toPromise()
             .then(response => response.json() as HookInterface)
+            .catch(this.handleError);
+    }
+
+    /**
+     * Make hook HTTP request.
+     * @param hookInterface
+     */
+    makeRequest(hookInterface: HookInterface, hook: Hook): Promise<string> {
+        let fields = hookInterface.fields;
+
+        let params: URLSearchParams = new URLSearchParams();
+        fields.forEach(function(field){
+            if (field.value) {
+                params.set(field.id, field.value);
+            }
+        });
+
+        return this.http.get(this.host + hook.path, {search: params})
+            .toPromise()
+            .then(response => response.json())
             .catch(this.handleError);
     }
 
