@@ -4,6 +4,7 @@ import { Location }                 from '@angular/common';
 
 import { HookService } from './hook.service';
 import { Hook } from './hook';
+import { HookInterface } from './hook-interface';
 
 @Component({
     selector: 'my-hook-detail',
@@ -16,6 +17,9 @@ import { Hook } from './hook';
         <div><label>tunnel: </label>{{hook.tunnel}}</div>
         <div><label>interface_path: </label>{{hook.interface_path}}</div>
         <div><label>methods: </label>{{hook.methods.toString()}}</div>
+      </div>
+      <div *ngIf="hookInterface">
+        <h2>Interface definition resolved!</h2>
       </div>
     `
 })
@@ -31,10 +35,21 @@ export class HookDetailComponent implements OnInit {
         this.route.params.forEach((params: Params) => {
             let id = params['id'];
             this.hookService.getHook(id)
-                .then(hook => this.hook = hook);
+                .then((hook) => {
+                    this.hook = hook;
+
+                    this.hookService.getHookInterface(this.hook.interface_path)
+                        .then(hookInterface => {
+                            this.hookInterface = hookInterface;
+                            console.log("getting interface", hookInterface);
+
+                        });
+                });
+
         });
     }
 
     @Input()
     hook: Hook;
+    hookInterface: HookInterface;
 }

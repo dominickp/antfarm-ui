@@ -24,7 +24,14 @@ var HookDetailComponent = (function () {
         this.route.params.forEach(function (params) {
             var id = params['id'];
             _this.hookService.getHook(id)
-                .then(function (hook) { return _this.hook = hook; });
+                .then(function (hook) {
+                _this.hook = hook;
+                _this.hookService.getHookInterface(_this.hook.interface_path)
+                    .then(function (hookInterface) {
+                    _this.hookInterface = hookInterface;
+                    console.log("getting interface", hookInterface);
+                });
+            });
         });
     };
     __decorate([
@@ -34,7 +41,7 @@ var HookDetailComponent = (function () {
     HookDetailComponent = __decorate([
         core_1.Component({
             selector: 'my-hook-detail',
-            template: "\n      <div *ngIf=\"hook\">\n        <h2>{{hook.path}} details!</h2>\n        <div><label>id: </label>{{hook.id}}</div>\n        <div><label>path: </label>{{hook.path}}</div>\n        <div><label>nest: </label>{{hook.nest}}</div>\n        <div><label>tunnel: </label>{{hook.tunnel}}</div>\n        <div><label>interface_path: </label>{{hook.interface_path}}</div>\n        <div><label>methods: </label>{{hook.methods.toString()}}</div>\n      </div>\n    "
+            template: "\n      <div *ngIf=\"hook\">\n        <h2>{{hook.path}} details!</h2>\n        <div><label>id: </label>{{hook.id}}</div>\n        <div><label>path: </label>{{hook.path}}</div>\n        <div><label>nest: </label>{{hook.nest}}</div>\n        <div><label>tunnel: </label>{{hook.tunnel}}</div>\n        <div><label>interface_path: </label>{{hook.interface_path}}</div>\n        <div><label>methods: </label>{{hook.methods.toString()}}</div>\n      </div>\n      <div *ngIf=\"hookInterface\">\n        <h2>Interface definition resolved!</h2>\n      </div>\n    "
         }), 
         __metadata('design:paramtypes', [hook_service_1.HookService, router_1.ActivatedRoute, common_1.Location])
     ], HookDetailComponent);

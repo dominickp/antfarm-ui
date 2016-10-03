@@ -4,18 +4,20 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Hook } from './hook';
+import {HookInterface} from "./hook-interface";
 
 @Injectable()
 export class HookService {
 
-    private heroesUrl = 'http://localhost:8081/hooks';  // URL to web api
+    private host = "http://localhost:8081/";
+    private hooks_path = 'hooks';  // URL to web api
 
     private hooksCache: Hook[];
 
     constructor(private http: Http) { }
 
     getHooks(): Promise<Hook[]> {
-        return this.http.get(this.heroesUrl)
+        return this.http.get(this.host + this.hooks_path)
             .toPromise()
             .then(response => response.json() as Hook[])
             .catch(this.handleError);
@@ -37,6 +39,13 @@ export class HookService {
                     return hook.id == id;
                 });
             });
+    }
+
+    getHookInterface(interface_path: string): Promise<HookInterface> {
+        return this.http.get(this.host + interface_path)
+            .toPromise()
+            .then(response => response.json() as HookInterface)
+            .catch(this.handleError);
     }
 
 }

@@ -14,10 +14,11 @@ require('rxjs/add/operator/toPromise');
 var HookService = (function () {
     function HookService(http) {
         this.http = http;
-        this.heroesUrl = 'http://localhost:8081/hooks'; // URL to web api
+        this.host = "http://localhost:8081/";
+        this.hooks_path = 'hooks'; // URL to web api
     }
     HookService.prototype.getHooks = function () {
-        return this.http.get(this.heroesUrl)
+        return this.http.get(this.host + this.hooks_path)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -36,6 +37,12 @@ var HookService = (function () {
                 return hook.id == id;
             });
         });
+    };
+    HookService.prototype.getHookInterface = function (interface_path) {
+        return this.http.get(this.host + interface_path)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     HookService = __decorate([
         core_1.Injectable(), 
