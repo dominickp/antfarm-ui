@@ -20,6 +20,7 @@ import { HookInterface } from './hook-interface';
       </div>
       <div *ngIf="hookInterface">
         <h2>Interface definition resolved!</h2>
+        <hook-interface [hookInterface]="hookInterface"></hook-interface>
       </div>
     `
 })
@@ -41,11 +42,9 @@ export class HookDetailComponent implements OnInit {
                     this.hookService.getHookInterface(this.hook.interface_path)
                         .then(hookInterface => {
                             this.hookInterface = hookInterface;
-                            console.log("getting interface", hookInterface);
-
+                            // console.log("getting interface", hookInterface);
                         });
                 });
-
         });
     }
 

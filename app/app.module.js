@@ -13,6 +13,7 @@ var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var app_component_1 = require('./app.component');
 var hook_detail_component_1 = require('./hooks/hook-detail.component');
+var hook_interface_component_1 = require('./hooks/hook-interface.component');
 var hooks_component_1 = require('./hooks/hooks.component');
 var dashboard_component_1 = require('./dashboard.component');
 var hook_service_1 = require('./hooks/hook.service');
@@ -31,6 +32,7 @@ var AppModule = (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
+                hook_interface_component_1.HookInterfaceComponent,
                 hook_detail_component_1.HookDetailComponent,
                 hooks_component_1.HooksComponent,
                 dashboard_component_1.DashboardComponent
