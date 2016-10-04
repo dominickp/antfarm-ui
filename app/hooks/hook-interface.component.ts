@@ -24,6 +24,14 @@ import { HookInterface } from './hook-interface';
                         <!--<input *ngSwitchCase="'file'" type="file" class="form-control" id="{{field.id}}" -->
                         <!--placeholder="{{field.placeholder}}" name="{{field.id}}"-->
                         <!--[(ngModel)]="field.value">-->
+                        
+                        <select *ngSwitchCase="'select'" id="{{field.id}}" name="{{field.id}}" class="form-control">
+                          <option *ngFor="let value of field.acceptableValues">{{value}}</option>
+                        </select>
+                        
+                        <!--<input *ngSwitchCase="'file'" type="file" class="form-control" id="{{field.id}}" -->
+                        <!--placeholder="{{field.placeholder}}" name="{{field.id}}"-->
+                        <!--[(ngModel)]="field.value">-->
             
                         <div *ngSwitchDefault="" class="alert alert-danger" role="alert">
                             <strong>Error!</strong> Field type "{{field.type}}" is not supported.

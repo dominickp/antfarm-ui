@@ -5,5 +5,6 @@ export class Field {
     value: any;
     placeholder: string;
     required: boolean;
+    acceptableValues: string[];
 
 }
