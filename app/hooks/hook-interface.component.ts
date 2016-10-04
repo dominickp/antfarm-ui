@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
+import { FormsModule }   from '@angular/forms';
 
 import { HookService } from './hook.service';
 import { Hook } from './hook';
@@ -29,11 +30,16 @@ import { HookInterface } from './hook-interface';
                         <!--placeholder="{{field.placeholder}}" name="{{field.id}}"-->
                         <!--[(ngModel)]="field.value"  (onUpload)="handleUpload($event)">-->
                         
+                        <!--<div class="file_upload" *ngSwitchCase="'file'" >-->
+                            <!--<input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" -->
+                               <!--ngFileSelect-->
+                               <!--[options]="basicOptions" -->
+                           <!---->
+                               <!--(onUpload)="handleUpload($event)"-->
+                               <!--&gt;-->
                         <div class="file_upload" *ngSwitchCase="'file'" >
                             <input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" 
-                               ngFileSelect
-                               [options]="basicOptions" 
-                               (onUpload)="handleUpload($event)">
+                               >
                                
                                 <div>
                                   Response: {{ response | json }}
@@ -56,7 +62,7 @@ import { HookInterface } from './hook-interface';
                     
             </div>
             
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button (click)="submit($event)" class="btn btn-default">Submit</button>
             
         </form>
       </div>
@@ -90,28 +96,41 @@ export class HookInterfaceComponent implements OnInit {
             });
     }
 
+    submit = function($event) {
+        // our function body
+        $event.preventDefault();
 
+        this.onSubmit();
 
-    private zone: NgZone;
-    private basicOptions: Object;
-    private progress: number = 0;
-    private response: any = {};
+    };
 
+    ngOnInit(){
 
-    protected endpoint = "http://insight.dev:8081/hooks/proof/create";
-
-    ngOnInit() {
-        this.zone = new NgZone({ enableLongStackTrace: false });
-        this.basicOptions = {
-            url: this.endpoint
-        };
     }
 
-    handleUpload(data: any): void {
-        this.zone.run(() => {
-            this.response = data;
-            this.progress = data.progress.percent / 100;
-        });
-    }
+
+    //
+    // private zone: NgZone;
+    // private basicOptions: Object;
+    // private progress: number = 0;
+    // private response: any = {};
+    //
+    //
+    // protected endpoint = "http://insight.dev:8081/hooks/proof/create";
+    //
+    // ngOnInit() {
+    //     this.zone = new NgZone({ enableLongStackTrace: false });
+    //     this.basicOptions = {
+    //         url: this.endpoint,
+    //         autoUpload: false
+    //     };
+    // }
+    //
+    // handleUpload(data: any): void {
+    //     this.zone.run(() => {
+    //         this.response = data;
+    //         this.progress = data.progress.percent / 100;
+    //     });
+    // }
 
 }

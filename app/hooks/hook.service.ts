@@ -1,4 +1,4 @@
-import { Injectable }    from '@angular/core';
+import { Injectable, OnInit, NgZone }    from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -62,18 +62,18 @@ export class HookService {
             }
         });
 
-        if(hook.methods.get === true){
+        if(hook.method === "get"){
             return this.http.get(this.host + hook.path, {search: params})
                 .toPromise()
                 .then(response => response.json())
                 .catch(this.handleError);
-        } else if (hook.methods.post === true){
+        } else if (hook.method === "post"){
             return this.http.post(this.host + hook.path, {search: params})
                 .toPromise()
                 .then(response => response.json())
                 .catch(this.handleError);
         } else {
-            throw "Unsupported HTTP method. " + hook.methods.toString()
+            throw "Unsupported HTTP method. " + hook.method.toString()
         }
 
     }

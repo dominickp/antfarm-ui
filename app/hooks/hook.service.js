@@ -56,20 +56,20 @@ var HookService = (function () {
                 params.set(field.id, field.value);
             }
         });
-        if (hook.methods.get === true) {
+        if (hook.method === "get") {
             return this.http.get(this.host + hook.path, { search: params })
                 .toPromise()
                 .then(function (response) { return response.json(); })
                 .catch(this.handleError);
         }
-        else if (hook.methods.post === true) {
+        else if (hook.method === "post") {
             return this.http.post(this.host + hook.path, { search: params })
                 .toPromise()
                 .then(function (response) { return response.json(); })
                 .catch(this.handleError);
         }
         else {
-            throw "Unsupported HTTP method. " + hook.methods.toString();
+            throw "Unsupported HTTP method. " + hook.method.toString();
         }
     };
     HookService = __decorate([
