@@ -21,7 +21,11 @@ import { HookInterface } from './hook-interface';
                 <div><label>interface_path: </label>{{hook.interface_path}}</div>
                 <div><label>nest: </label>{{hook.nest}}</div>
                 <div><label>tunnel: </label>{{hook.tunnel}}</div>
-                <div><label>methods: </label>{{hook.methods}}</div>
+                <div>
+                    <label>method: </label>
+                    <strong *ngIf="hook.methods.get === true">GET</strong>
+                    <strong *ngIf="hook.methods.post === true">POST</strong>
+                </div>
             </div>
         </div>
     `
