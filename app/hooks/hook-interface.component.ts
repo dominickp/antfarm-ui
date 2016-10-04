@@ -21,10 +21,6 @@ import { HookInterface } from './hook-interface';
                         placeholder="{{field.placeholder}}" name="{{field.id}}"
                         [(ngModel)]="field.value">
                         
-                        <!--<input *ngSwitchCase="'file'" type="file" class="form-control" id="{{field.id}}" -->
-                        <!--placeholder="{{field.placeholder}}" name="{{field.id}}"-->
-                        <!--[(ngModel)]="field.value">-->
-                        
                         <select *ngSwitchCase="'select'" id="{{field.id}}" name="{{field.id}}" class="form-control">
                           <option *ngFor="let value of field.acceptableValues">{{value}}</option>
                         </select>
