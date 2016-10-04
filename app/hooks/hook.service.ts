@@ -68,7 +68,7 @@ export class HookService {
                 .then(response => response.json())
                 .catch(this.handleError);
         } else if (hook.methods.post === true){
-            return this.http.get(this.host + hook.path, {search: params})
+            return this.http.post(this.host + hook.path, {search: params})
                 .toPromise()
                 .then(response => response.json())
                 .catch(this.handleError);

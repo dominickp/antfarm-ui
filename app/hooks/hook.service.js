@@ -63,7 +63,7 @@ var HookService = (function () {
                 .catch(this.handleError);
         }
         else if (hook.methods.post === true) {
-            return this.http.get(this.host + hook.path, { search: params })
+            return this.http.post(this.host + hook.path, { search: params })
                 .toPromise()
                 .then(function (response) { return response.json(); })
                 .catch(this.handleError);
