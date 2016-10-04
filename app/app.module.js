@@ -19,6 +19,7 @@ var dashboard_component_1 = require('./dashboard.component');
 var hook_service_1 = require('./hooks/hook.service');
 var app_routing_1 = require('./app.routing');
 var http_1 = require('@angular/http');
+var ng2_uploader_1 = require('ng2-uploader');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,7 +36,8 @@ var AppModule = (function () {
                 hook_interface_component_1.HookInterfaceComponent,
                 hook_detail_component_1.HookDetailComponent,
                 hooks_component_1.HooksComponent,
-                dashboard_component_1.DashboardComponent
+                dashboard_component_1.DashboardComponent,
+                ng2_uploader_1.UPLOAD_DIRECTIVES
             ],
             providers: [
                 hook_service_1.HookService

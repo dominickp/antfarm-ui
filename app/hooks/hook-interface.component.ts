@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 
@@ -25,15 +25,33 @@ import { HookInterface } from './hook-interface';
                           <option *ngFor="let value of field.acceptableValues">{{value}}</option>
                         </select>
                         
-                        <!--<input *ngSwitchCase="'file'" type="file" class="form-control" id="{{field.id}}" -->
+                        <!--<input *ngSwitchCase="'file'" NgFileSelect type="file" class="form-control" id="{{field.id}}" -->
                         <!--placeholder="{{field.placeholder}}" name="{{field.id}}"-->
-                        <!--[(ngModel)]="field.value">-->
+                        <!--[(ngModel)]="field.value"  (onUpload)="handleUpload($event)">-->
+                        
+                        <div class="file_upload" *ngSwitchCase="'file'" >
+                            <input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" 
+                               ngFileSelect
+                               [options]="basicOptions" 
+                               (onUpload)="handleUpload($event)">
+                               
+                                <div>
+                                  Response: {{ response | json }}
+                                </div>
+                                
+                                <div>
+                                  Progress: {{ progress }}%
+                                </div>
+                        </div>
+                        
             
                         <div *ngSwitchDefault="" class="alert alert-danger" role="alert">
                             <strong>Error!</strong> Field type "{{field.type}}" is not supported.
                         </div>
                       
                     </div>
+                    
+                   
                     
                     
             </div>
@@ -50,11 +68,9 @@ export class HookInterfaceComponent implements OnInit {
         private hookService: HookService,
         private route: ActivatedRoute,
         private location: Location
+
     ) {}
 
-    ngOnInit(): void {
-
-    }
 
     @Input()
     hookInterface: HookInterface;
@@ -73,4 +89,29 @@ export class HookInterfaceComponent implements OnInit {
                 console.log(response);
             });
     }
+
+
+
+    private zone: NgZone;
+    private basicOptions: Object;
+    private progress: number = 0;
+    private response: any = {};
+
+
+    protected endpoint = "http://insight.dev:8081/hooks/proof/create";
+
+    ngOnInit() {
+        this.zone = new NgZone({ enableLongStackTrace: false });
+        this.basicOptions = {
+            url: this.endpoint
+        };
+    }
+
+    handleUpload(data: any): void {
+        this.zone.run(() => {
+            this.response = data;
+            this.progress = data.progress.percent / 100;
+        });
+    }
+
 }

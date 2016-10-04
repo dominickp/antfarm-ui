@@ -9,7 +9,7 @@ import { DashboardComponent }     from './dashboard.component';
 import { HookService }         from './hooks/hook.service';
 import { routing } from './app.routing';
 import { HttpModule }    from '@angular/http';
-
+import { UPLOAD_DIRECTIVES } from 'ng2-uploader';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { HttpModule }    from '@angular/http';
         HookInterfaceComponent,
         HookDetailComponent,
         HooksComponent,
-        DashboardComponent
+        DashboardComponent,
+        UPLOAD_DIRECTIVES
     ],
     providers: [
         HookService
