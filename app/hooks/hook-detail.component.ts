@@ -43,14 +43,18 @@ export class HookDetailComponent implements OnInit {
             let id = params['id'];
             this.hookService.getHook(id)
                 .then((hook) => {
-                    this.hook = hook;
+                    if(hook){
+                        this.hook = hook;
+                        console.log(this.hook);
+                        this.hookService.getHookInterface(hook.interface_path)
+                            .then(hookInterface => {
+                                this.hookInterface = hookInterface;
+                                console.log("getting interface", hookInterface);
+                            });
+                    } else {
+                        console.log(`Hook ${id} was not found.`);
+                    }
 
-                    console.log(this.hook);
-                    this.hookService.getHookInterface(hook.interface_path)
-                        .then(hookInterface => {
-                            this.hookInterface = hookInterface;
-                             console.log("getting interface", hookInterface);
-                        });
                 });
         });
     }

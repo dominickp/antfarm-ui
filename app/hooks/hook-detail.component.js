@@ -25,13 +25,18 @@ var HookDetailComponent = (function () {
             var id = params['id'];
             _this.hookService.getHook(id)
                 .then(function (hook) {
-                _this.hook = hook;
-                console.log(_this.hook);
-                _this.hookService.getHookInterface(hook.interface_path)
-                    .then(function (hookInterface) {
-                    _this.hookInterface = hookInterface;
-                    console.log("getting interface", hookInterface);
-                });
+                if (hook) {
+                    _this.hook = hook;
+                    console.log(_this.hook);
+                    _this.hookService.getHookInterface(hook.interface_path)
+                        .then(function (hookInterface) {
+                        _this.hookInterface = hookInterface;
+                        console.log("getting interface", hookInterface);
+                    });
+                }
+                else {
+                    console.log("Hook " + id + " was not found.");
+                }
             });
         });
     };

@@ -35,7 +35,7 @@ export class HooksComponent implements OnInit {
     }
 
     hooks: Hook[];
-    title = 'Tour of Heroes';
+    title = 'Available Hooks';
     selectedHook: Hook;
 
 }

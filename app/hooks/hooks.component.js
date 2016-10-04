@@ -13,7 +13,7 @@ var hook_service_1 = require('./hook.service');
 var HooksComponent = (function () {
     function HooksComponent(hookService) {
         this.hookService = hookService;
-        this.title = 'Tour of Heroes';
+        this.title = 'Available Hooks';
     }
     HooksComponent.prototype.ngOnInit = function () {
         this.getHooks();
