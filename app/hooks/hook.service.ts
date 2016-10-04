@@ -16,6 +16,43 @@ export class HookService {
 
     constructor(private http: Http) { }
 
+
+
+
+    private zone: NgZone;
+    private basicOptions: Object;
+    private progress: number = 0;
+    private response: any = {};
+
+
+    protected endpoint = "http://insight.dev:8081/hooks/proof/create";
+
+    ngOnInit() {
+        this.zone = new NgZone({ enableLongStackTrace: false });
+        this.basicOptions = {
+            url: this.endpoint,
+            autoUpload: false
+        };
+    }
+
+    handleUpload(data: any): void {
+        this.zone.run(() => {
+            this.response = data;
+            this.progress = data.progress.percent / 100;
+        });
+    }
+
+    makeRequest2(hookInterface: HookInterface, hook: Hook, data: any) {
+        this.zone.run(() => {
+            this.response = data;
+            this.progress = data.progress.percent / 100;
+        });
+
+    }
+
+
+
+
     getHooks(): Promise<Hook[]> {
         return this.http.get(this.host + this.hooks_path)
             .toPromise()
@@ -52,30 +89,30 @@ export class HookService {
      * Make hook HTTP request.
      * @param hookInterface
      */
-    makeRequest(hookInterface: HookInterface, hook: Hook): Promise<string> {
-        let fields = hookInterface.fields;
-
-        let params: URLSearchParams = new URLSearchParams();
-        fields.forEach(function(field){
-            if (field.value) {
-                params.set(field.id, field.value);
-            }
-        });
-
-        if(hook.method === "get"){
-            return this.http.get(this.host + hook.path, {search: params})
-                .toPromise()
-                .then(response => response.json())
-                .catch(this.handleError);
-        } else if (hook.method === "post"){
-            return this.http.post(this.host + hook.path, {search: params})
-                .toPromise()
-                .then(response => response.json())
-                .catch(this.handleError);
-        } else {
-            throw "Unsupported HTTP method. " + hook.method.toString()
-        }
-
-    }
+    // makeRequest(hookInterface: HookInterface, hook: Hook): Promise<string> {
+    //     let fields = hookInterface.fields;
+    //
+    //     let params: URLSearchParams = new URLSearchParams();
+    //     fields.forEach(function(field){
+    //         if (field.value) {
+    //             params.set(field.id, field.value);
+    //         }
+    //     });
+    //
+    //     if(hook.method === "get"){
+    //         return this.http.get(this.host + hook.path, {search: params})
+    //             .toPromise()
+    //             .then(response => response.json())
+    //             .catch(this.handleError);
+    //     } else if (hook.method === "post"){
+    //         return this.http.post(this.host + hook.path, {search: params})
+    //             .toPromise()
+    //             .then(response => response.json())
+    //             .catch(this.handleError);
+    //     } else {
+    //         throw "Unsupported HTTP method. " + hook.method.toString()
+    //     }
+    //
+    // }
 
 }

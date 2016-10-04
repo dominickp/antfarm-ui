@@ -1,7 +1,10 @@
-import { Component, Input, OnInit, NgZone } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { FormsModule }   from '@angular/forms';
+
+import {MultipartItem} from "../plugins/multipart-upload/multipart-item";
+import {MultipartUploader} from "../plugins/multipart-upload/multipart-uploader";
 
 import { HookService } from './hook.service';
 import { Hook } from './hook';
@@ -11,7 +14,7 @@ import { HookInterface } from './hook-interface';
     selector: 'hook-interface',
     template: `
       <div *ngIf="hookInterface">
-        <form *ngIf="active" (ngSubmit)="onSubmit()" #interfaceForm="ngForm">
+        <form *ngIf="active" (ngSubmit)="upload()" #interfaceForm="ngForm">
         
             <div *ngFor="let field of hookInterface.fields" class="form-group">
                 <label htmlFor="{{field.id}}">{{field.name}}</label>
@@ -39,6 +42,7 @@ import { HookInterface } from './hook-interface';
                                <!--&gt;-->
                         <div class="file_upload" *ngSwitchCase="'file'" >
                             <input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" 
+                                (change)="selectFile($event)"
                                >
                                
                                 <div>
@@ -61,8 +65,7 @@ import { HookInterface } from './hook-interface';
                     
                     
             </div>
-            
-            <button (click)="submit($event)" class="btn btn-default">Submit</button>
+             <button class="btn btn-primary" (click)="upload($event);">Submit</button>
             
         </form>
       </div>
@@ -70,12 +73,64 @@ import { HookInterface } from './hook-interface';
 })
 
 export class HookInterfaceComponent implements OnInit {
+
+    protected endpoint = "http://insight.dev:8081/hooks/proof/create";
+
+    private uploader:MultipartUploader = new MultipartUploader({url: "http://insight.dev:8081/hooks/proof/create"});
+
+    multipartItem:MultipartItem = new MultipartItem(this.uploader);
+
+    email:string;
+    password:string;
+    file: File;
+
+
+
     constructor(
         private hookService: HookService,
         private route: ActivatedRoute,
         private location: Location
 
-    ) {}
+    ) {
+        this.multipartItem.withCredentials = false;
+    }
+
+    upload (event) {
+        let model = this;
+        event.preventDefault();
+        console.debug("home.ts & upload() ==>");
+        // if (null == this.file || null == this.email || null == this.password){
+        //     console.error("home.ts & upload() form invalid.");
+        //     return;
+        // }
+        if (this.multipartItem == null){
+            this.multipartItem = new MultipartItem(this.uploader);
+        }
+        if (this.multipartItem.formData == null){
+            this.multipartItem.formData = new FormData();
+        }
+
+        this.hookInterface.fields.forEach(function(field){
+            console.log("Adding to formdata", field.id, field.value);
+            model.multipartItem.formData.append(field.id, field.value);
+        });
+
+        console.log(this.multipartItem);
+
+        this.multipartItem.callback = this.uploadCallback;
+        this.multipartItem.upload();
+    };
+
+    uploadCallback = (data) => {
+        console.debug("home.ts & uploadCallback() ==>");
+        this.file = null;
+        if (data){
+            console.debug("home.ts & uploadCallback() upload file success.");
+        }else{
+            console.error("home.ts & uploadCallback() upload file false.");
+        }
+    };
+
 
 
     @Input()
@@ -86,51 +141,42 @@ export class HookInterfaceComponent implements OnInit {
     active = true;
     submitted = false;
 
-    onSubmit() {
-        this.submitted = true;
-        console.log("Submitting", this.hookInterface.fields);
-
-        this.hookService.makeRequest(this.hookInterface, this.hook)
-            .then((response) => {
-                console.log(response);
-            });
-    }
+    // onSubmit() {
+    //
+    //     this.submitted = true;
+    //     console.log("Submitting", this.hookInterface.fields);
+    //
+    //     this.hookService.makeRequest(this.hookInterface, this.hook)
+    //         .then((response) => {
+    //             console.log(response);
+    //         });
+    // }
 
     submit = function($event) {
         // our function body
         $event.preventDefault();
+        console.log("uploading");
 
-        this.onSubmit();
+        // this.onSubmit();
 
     };
 
-    ngOnInit(){
+
+
+    ngOnInit() {
 
     }
 
 
-    //
-    // private zone: NgZone;
-    // private basicOptions: Object;
-    // private progress: number = 0;
-    // private response: any = {};
-    //
-    //
-    // protected endpoint = "http://insight.dev:8081/hooks/proof/create";
-    //
-    // ngOnInit() {
-    //     this.zone = new NgZone({ enableLongStackTrace: false });
-    //     this.basicOptions = {
-    //         url: this.endpoint,
-    //         autoUpload: false
-    //     };
-    // }
-    //
-    // handleUpload(data: any): void {
-    //     this.zone.run(() => {
-    //         this.response = data;
-    //         this.progress = data.progress.percent / 100;
-    //     });
-    // }
+    selectFile($event): void {
+        var inputValue = $event.target;
+        if( null == inputValue || null == inputValue.files[0]){
+            console.debug("Input file error.");
+            return;
+        }else {
+            this.file = inputValue.files[0];
+            console.debug("Input File name: " + this.file.name + " type:" + this.file.size + " size:" + this.file.size);
+        }
+    }
 
 }

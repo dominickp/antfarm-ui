@@ -16,7 +16,31 @@ var HookService = (function () {
         this.http = http;
         this.host = "http://localhost:8081";
         this.hooks_path = '/hooks'; // URL to web api
+        this.progress = 0;
+        this.response = {};
+        this.endpoint = "http://insight.dev:8081/hooks/proof/create";
     }
+    HookService.prototype.ngOnInit = function () {
+        this.zone = new core_1.NgZone({ enableLongStackTrace: false });
+        this.basicOptions = {
+            url: this.endpoint,
+            autoUpload: false
+        };
+    };
+    HookService.prototype.handleUpload = function (data) {
+        var _this = this;
+        this.zone.run(function () {
+            _this.response = data;
+            _this.progress = data.progress.percent / 100;
+        });
+    };
+    HookService.prototype.makeRequest2 = function (hookInterface, hook, data) {
+        var _this = this;
+        this.zone.run(function () {
+            _this.response = data;
+            _this.progress = data.progress.percent / 100;
+        });
+    };
     HookService.prototype.getHooks = function () {
         return this.http.get(this.host + this.hooks_path)
             .toPromise()
@@ -43,34 +67,6 @@ var HookService = (function () {
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
-    };
-    /**
-     * Make hook HTTP request.
-     * @param hookInterface
-     */
-    HookService.prototype.makeRequest = function (hookInterface, hook) {
-        var fields = hookInterface.fields;
-        var params = new http_1.URLSearchParams();
-        fields.forEach(function (field) {
-            if (field.value) {
-                params.set(field.id, field.value);
-            }
-        });
-        if (hook.method === "get") {
-            return this.http.get(this.host + hook.path, { search: params })
-                .toPromise()
-                .then(function (response) { return response.json(); })
-                .catch(this.handleError);
-        }
-        else if (hook.method === "post") {
-            return this.http.post(this.host + hook.path, { search: params })
-                .toPromise()
-                .then(function (response) { return response.json(); })
-                .catch(this.handleError);
-        }
-        else {
-            throw "Unsupported HTTP method. " + hook.method.toString();
-        }
     };
     HookService = __decorate([
         core_1.Injectable(), 
