@@ -25,35 +25,35 @@ import { HookInterface } from './hook-interface';
                         class="glyphicon glyphicon-info-sign" ></span>
                 </label>
                 
-                    <div [ngSwitch]="field.type">
+                <div [ngSwitch]="field.type">
+                
+                    <textarea *ngSwitchCase="'textarea'" class="form-control" id="{{field.id}}" 
+                    placeholder="{{field.placeholder}}" name="{{field.id}}"
+                    [(ngModel)]="field.value"></textarea>
                     
-                        <textarea *ngSwitchCase="'textarea'" class="form-control" id="{{field.id}}" 
-                        placeholder="{{field.placeholder}}" name="{{field.id}}"
-                        [(ngModel)]="field.value"></textarea>
-                        
-                        <input *ngSwitchCase="'text'" type="text" class="form-control" id="{{field.id}}" 
-                        placeholder="{{field.placeholder}}" name="{{field.id}}"
-                        [(ngModel)]="field.value">
-                        
-                        <select *ngSwitchCase="'select'" id="{{field.id}}" name="{{field.id}}" class="form-control">
-                          <option *ngFor="let value of field.acceptableValues">{{value}}</option>
-                        </select>
-                        
-                        <div class="file_upload" *ngSwitchCase="'file'" >
-                            <input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" 
-                                (change)="selectFile($event)">
-                        </div>
- 
-                        <div *ngSwitchDefault="" class="alert alert-danger" role="alert">
-                            <strong>Error!</strong> Field type "{{field.type}}" is not supported.
-                        </div>
-                      
+                    <input *ngSwitchCase="'text'" type="text" class="form-control" id="{{field.id}}" 
+                    placeholder="{{field.placeholder}}" name="{{field.id}}"
+                    [(ngModel)]="field.value">
+                    
+                    <select *ngSwitchCase="'select'" id="{{field.id}}" name="{{field.id}}" class="form-control">
+                      <option *ngFor="let value of field.acceptableValues">{{value}}</option>
+                    </select>
+                    
+                    <div class="file_upload" *ngSwitchCase="'file'" >
+                        <input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" 
+                            (change)="selectFile($event)">
                     </div>
-                    
-                    <p class="help-block">{{field.description}}</p>
 
+                    <div *ngSwitchDefault="" class="alert alert-danger" role="alert">
+                        <strong>Error!</strong> Field type "{{field.type}}" is not supported.
+                    </div>
+                  
+                </div>
+                    
+                <p class="help-block">{{field.description}}</p>
                     
             </div>
+            
              <button class="btn btn-primary" (click)="upload($event);">Submit</button>
             
         </form>
@@ -139,7 +139,7 @@ export class HookInterfaceComponent implements OnInit {
         if( null == inputValue || null == inputValue.files[0]){
             console.debug("Input file error.");
             return;
-        }else {
+        } else {
             this.files.push(inputValue.files[0]);
             console.debug("Input File name: " + theFile.name + " type:" + theFile.type + " size:" +theFile.size);
         }

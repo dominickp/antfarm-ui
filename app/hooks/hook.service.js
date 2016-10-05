@@ -16,31 +16,7 @@ var HookService = (function () {
         this.http = http;
         this.host = "http://localhost:8081";
         this.hooks_path = '/hooks'; // URL to web api
-        this.progress = 0;
-        this.response = {};
-        this.endpoint = "http://insight.dev:8081/hooks/proof/create";
     }
-    HookService.prototype.ngOnInit = function () {
-        this.zone = new core_1.NgZone({ enableLongStackTrace: false });
-        this.basicOptions = {
-            url: this.endpoint,
-            autoUpload: false
-        };
-    };
-    HookService.prototype.handleUpload = function (data) {
-        var _this = this;
-        this.zone.run(function () {
-            _this.response = data;
-            _this.progress = data.progress.percent / 100;
-        });
-    };
-    HookService.prototype.makeRequest2 = function (hookInterface, hook, data) {
-        var _this = this;
-        this.zone.run(function () {
-            _this.response = data;
-            _this.progress = data.progress.percent / 100;
-        });
-    };
     HookService.prototype.getHooks = function () {
         return this.http.get(this.host + this.hooks_path)
             .toPromise()
