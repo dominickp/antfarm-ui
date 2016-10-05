@@ -100,6 +100,7 @@ export class HookService {
         model.uploader = new MultipartUploader({url: model.host + hook.path});
         model.multipartItem = new MultipartItem(this.uploader);
         model.multipartItem.withCredentials = false;
+        model.multipartItem.method = hook.method.toUpperCase();
 
 
         // event.preventDefault();

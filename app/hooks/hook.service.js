@@ -88,6 +88,7 @@ var HookService = (function () {
         model.uploader = new multipart_uploader_1.MultipartUploader({ url: model.host + hook.path });
         model.multipartItem = new multipart_item_1.MultipartItem(this.uploader);
         model.multipartItem.withCredentials = false;
+        model.multipartItem.method = hook.method.toUpperCase();
         // event.preventDefault();
         console.debug("home.ts & upload() ==>");
         if (model.multipartItem == null) {
