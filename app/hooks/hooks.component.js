@@ -20,7 +20,11 @@ var HooksComponent = (function () {
     };
     HooksComponent.prototype.getHooks = function () {
         var _this = this;
-        this.hookService.getHooks().then(function (hooks) { return _this.hooks = hooks; });
+        this.hookService.getHooks()
+            .then(function (hooks) { return _this.hooks = hooks; })
+            .catch(function (reason) {
+            console.log("caught", reason);
+        });
     };
     HooksComponent = __decorate([
         core_1.Component({

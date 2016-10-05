@@ -3,6 +3,8 @@ import { OnInit } from '@angular/core';
 
 import { Hook } from './hook';
 import { HookService } from './hook.service';
+import {collectEventListeners} from "@angular/compiler/src/view_compiler/event_binder";
+
 
 @Component({
     moduleId: module.id,
@@ -31,7 +33,11 @@ export class HooksComponent implements OnInit {
     }
 
     getHooks(): void {
-        this.hookService.getHooks().then(hooks => this.hooks = hooks);
+        this.hookService.getHooks()
+            .then(hooks => this.hooks = hooks)
+            .catch(reason => {
+                console.log("caught", reason)
+            });
     }
 
     hooks: Hook[];

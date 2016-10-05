@@ -11,7 +11,7 @@ import { HookInterface } from './hook-interface';
     template: `
         <div class="row">
             <div *ngIf="hookInterface" class="col-md-8">
-                <h2>Hook Interface</h2>
+                <h2>{{hook.nest}} Interface</h2>
                 <hook-interface [hookInterface]="hookInterface" [hook]="hook"></hook-interface>
             </div>
             <div *ngIf="hook" class="col-md-4">
@@ -48,12 +48,20 @@ export class HookDetailComponent implements OnInit {
                             .then(hookInterface => {
                                 this.hookInterface = hookInterface;
                                 console.log("getting interface", hookInterface);
-                            });
+                            })
+                            .catch(reason => {
+                                console.log("caught", reason);
+                                }
+                            );
                     } else {
                         console.log(`Hook ${id} was not found.`);
                     }
 
-                });
+                })
+                .catch(reason => {
+                        console.log("caught", reason);
+                    }
+                );
         });
     }
 
