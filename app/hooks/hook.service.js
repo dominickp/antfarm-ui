@@ -30,6 +30,7 @@ var HookService = (function () {
             _this.files = [];
             if (data) {
                 console.debug("home.ts & uploadCallback() upload file success.");
+                console.log(data);
             }
             else {
                 console.error("home.ts & uploadCallback() upload file false.");
@@ -98,17 +99,29 @@ var HookService = (function () {
         });
         return "?" + str.join("&");
     };
-    HookService.prototype.upload = function (event, hookInterface, hook) {
+    HookService.prototype.upload = function (event, hookInterface, hook, hookRequest, callback) {
+        if (hookRequest === void 0) { hookRequest = true; }
         var model = this;
         // If GET, serialize interface values into URL
         var queryString = "";
-        if (hook.method.toUpperCase() === "GET") {
-            queryString = model.serializeHookInterface(hookInterface.fields);
+        // Determine request URL
+        var requestUrl, requestMethod;
+        if (hookRequest === true) {
+            requestMethod = hook.method.toUpperCase();
+            if (hook.method.toUpperCase() === "GET") {
+                queryString = model.serializeHookInterface(hookInterface.fields);
+            }
+            requestUrl = model.host + hook.path + queryString;
         }
-        model.uploader = new multipart_uploader_1.MultipartUploader({ url: model.host + hook.path + queryString });
+        else {
+            queryString = model.serializeHookInterface(hookInterface.fields);
+            requestUrl = model.host + hook.interface_path + queryString;
+            requestMethod = "GET";
+        }
+        model.uploader = new multipart_uploader_1.MultipartUploader({ url: requestUrl });
         model.multipartItem = new multipart_item_1.MultipartItem(this.uploader);
         model.multipartItem.withCredentials = false;
-        model.multipartItem.method = hook.method.toUpperCase();
+        model.multipartItem.method = requestMethod;
         // event.preventDefault();
         console.debug("home.ts & upload() ==>");
         if (model.multipartItem == null) {
@@ -128,7 +141,12 @@ var HookService = (function () {
         model.files.forEach(function (file, index) {
             model.multipartItem.formData.append("file" + index, file);
         });
-        this.multipartItem.callback = this.uploadCallback;
+        if (callback) {
+            this.multipartItem.callback = callback;
+        }
+        else {
+            this.multipartItem.callback = this.uploadCallback;
+        }
         this.multipartItem.upload();
     };
     ;

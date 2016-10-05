@@ -4,4 +4,8 @@ export class HookInterface {
 
     fields: Field[];
 
+    steps: Step[];
+
+    jobs: Job[];
+
 }

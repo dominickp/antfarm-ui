@@ -78,6 +78,7 @@ export class HookService {
         this.files = [];
         if (data){
             console.debug("home.ts & uploadCallback() upload file success.");
+            console.log(data);
         }else{
             console.error("home.ts & uploadCallback() upload file false.");
         }
@@ -114,19 +115,30 @@ export class HookService {
 
     }
 
-    upload (event, hookInterface: HookInterface, hook: Hook) {
+    upload (event, hookInterface: HookInterface, hook: Hook, hookRequest = true, callback?: any) {
         let model = this;
 
         // If GET, serialize interface values into URL
         let queryString = "";
-        if(hook.method.toUpperCase() === "GET") {
+
+        // Determine request URL
+        let requestUrl, requestMethod;
+        if(hookRequest === true) {
+            requestMethod = hook.method.toUpperCase();
+            if(hook.method.toUpperCase() === "GET") {
+                queryString = model.serializeHookInterface(hookInterface.fields);
+            }
+            requestUrl = model.host + hook.path + queryString;
+        } else {
             queryString = model.serializeHookInterface(hookInterface.fields);
+            requestUrl = model.host + hook.interface_path + queryString;
+            requestMethod = "GET";
         }
 
-        model.uploader = new MultipartUploader({url: model.host + hook.path + queryString});
+        model.uploader = new MultipartUploader({url: requestUrl});
         model.multipartItem = new MultipartItem(this.uploader);
         model.multipartItem.withCredentials = false;
-        model.multipartItem.method = hook.method.toUpperCase();
+        model.multipartItem.method = requestMethod;
 
 
         // event.preventDefault();
@@ -153,7 +165,11 @@ export class HookService {
             model.multipartItem.formData.append("file"+index,  file);
         });
 
-        this.multipartItem.callback = this.uploadCallback;
+        if(callback){
+            this.multipartItem.callback = callback;
+        } else {
+            this.multipartItem.callback = this.uploadCallback;
+        }
         this.multipartItem.upload();
     };
 

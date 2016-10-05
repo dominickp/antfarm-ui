@@ -26,13 +26,14 @@ import { HookInterface } from './hook-interface';
                 
                     <textarea *ngSwitchCase="'textarea'" class="form-control" id="{{field.id}}" 
                     placeholder="{{field.placeholder}}" name="{{field.id}}"
-                    [(ngModel)]="field.value"></textarea>
+                    [(ngModel)]="field.value">{{field.defaultValue}}</textarea>
                     
                     <input *ngSwitchCase="'text'" type="text" class="form-control" id="{{field.id}}" 
-                    placeholder="{{field.placeholder}}" name="{{field.id}}"
+                    placeholder="{{field.placeholder}}" name="{{field.id}}" value="{{field.defaultValue}}"
                     [(ngModel)]="field.value">
                     
                     <select *ngSwitchCase="'select'" id="{{field.id}}" name="{{field.id}}" class="form-control">
+                        <!-- Add default value -->
                       <option *ngFor="let value of field.acceptableValues">{{value}}</option>
                     </select>
                     
@@ -52,6 +53,10 @@ import { HookInterface } from './hook-interface';
             </div>
             
              <button class="btn btn-primary" (click)="upload($event);">Submit</button>
+             
+            <div *ngFor="let step of hookInterface.steps">
+                <button class="btn btn-default" (click)="makeInterfaceRequest($event);">{{step.name}}</button>
+            </div>
             
         </form>
       </div>
@@ -76,6 +81,23 @@ export class HookInterfaceComponent implements OnInit {
         model.hookService.upload(event, model.hookInterface, model.hook);
     };
 
+    makeInterfaceRequest(event) {
+        let model = this;
+        event.preventDefault();
+
+        model.hookService.upload(event, model.hookInterface, model.hook, false, (data) => {
+
+            if (data) {
+                console.log(data);
+                model.hookInterface = JSON.parse(data) as HookInterface;
+            } else {
+                console.error("No data returned!");
+            }
+
+
+        });
+
+    }
 
     @Input()
     hookInterface: HookInterface;

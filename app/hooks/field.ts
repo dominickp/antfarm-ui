@@ -9,5 +9,6 @@ export class Field {
     acceptableValues: string[];
     tooltip: string;
     description: string;
+    defaultValue: string;
 
 }
