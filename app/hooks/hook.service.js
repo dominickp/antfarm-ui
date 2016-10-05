@@ -83,9 +83,29 @@ var HookService = (function () {
             console.debug("Input File name: " + theFile.name + " type:" + theFile.type + " size:" + theFile.size);
         }
     };
+    HookService.prototype.serializeHookInterface = function (fields) {
+        var fieldsParam = [];
+        fields.forEach(function (field) {
+            var fieldObj = {
+                id: field.id,
+                value: field.value
+            };
+            fieldsParam.push(fieldObj);
+        });
+        var str = [];
+        fieldsParam.forEach(function (field) {
+            str.push(encodeURIComponent(field.id) + "=" + encodeURIComponent(field.value));
+        });
+        return "?" + str.join("&");
+    };
     HookService.prototype.upload = function (event, hookInterface, hook) {
         var model = this;
-        model.uploader = new multipart_uploader_1.MultipartUploader({ url: model.host + hook.path });
+        // If GET, serialize interface values into URL
+        var queryString = "";
+        if (hook.method.toUpperCase() === "GET") {
+            queryString = model.serializeHookInterface(hookInterface.fields);
+        }
+        model.uploader = new multipart_uploader_1.MultipartUploader({ url: model.host + hook.path + queryString });
         model.multipartItem = new multipart_item_1.MultipartItem(this.uploader);
         model.multipartItem.withCredentials = false;
         model.multipartItem.method = hook.method.toUpperCase();

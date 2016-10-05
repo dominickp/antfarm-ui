@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Hook } from './hook';
 import {HookInterface} from "./hook-interface";
+import {Field} from "./field";
 
 @Injectable()
 export class HookService {
@@ -94,10 +95,35 @@ export class HookService {
         }
     }
 
+    protected serializeHookInterface(fields: Field[]){
+
+        let fieldsParam = [];
+        fields.forEach(field => {
+            let fieldObj = {
+                id: field.id,
+                value: field.value
+            };
+            fieldsParam.push(fieldObj);
+        });
+
+        let str = [];
+        fieldsParam.forEach(field =>{
+            str.push(encodeURIComponent(field.id) + "=" + encodeURIComponent(field.value))
+        });
+        return "?" + str.join("&");
+
+    }
+
     upload (event, hookInterface: HookInterface, hook: Hook) {
         let model = this;
 
-        model.uploader = new MultipartUploader({url: model.host + hook.path});
+        // If GET, serialize interface values into URL
+        let queryString = "";
+        if(hook.method.toUpperCase() === "GET") {
+            queryString = model.serializeHookInterface(hookInterface.fields);
+        }
+
+        model.uploader = new MultipartUploader({url: model.host + hook.path + queryString});
         model.multipartItem = new MultipartItem(this.uploader);
         model.multipartItem.withCredentials = false;
         model.multipartItem.method = hook.method.toUpperCase();
