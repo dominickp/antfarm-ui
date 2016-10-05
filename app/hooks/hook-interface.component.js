@@ -70,9 +70,12 @@ var HookInterfaceComponent = (function () {
             this.multipartItem.formData = new FormData();
         }
         this.hookInterface.fields.forEach(function (field) {
-            console.log("Adding to formdata", field.id, field.value);
-            model.multipartItem.formData.append(field.id, field.value);
+            if (field.type !== "file") {
+                console.log("Adding to formdata", field.id, field.value);
+                model.multipartItem.formData.append(field.id, field.value);
+            }
         });
+        this.multipartItem.formData.append("file", this.file);
         console.log(this.multipartItem);
         this.multipartItem.callback = this.uploadCallback;
         this.multipartItem.upload();
