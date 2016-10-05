@@ -82,7 +82,7 @@ export class HookInterfaceComponent implements OnInit {
 
     email:string;
     password:string;
-    file: File;
+    files: File[] = [];
 
 
 
@@ -103,14 +103,15 @@ export class HookInterfaceComponent implements OnInit {
         //     console.error("home.ts & upload() form invalid.");
         //     return;
         // }
-        if (this.multipartItem == null){
-            this.multipartItem = new MultipartItem(this.uploader);
+        if (model.multipartItem == null){
+            model.multipartItem = new MultipartItem(model.uploader);
         }
-        if (this.multipartItem.formData == null){
-            this.multipartItem.formData = new FormData();
+        if (model.multipartItem.formData == null){
+            model.multipartItem.formData = new FormData();
         }
 
-        this.hookInterface.fields.forEach(function(field){
+        // Add form fields in
+        model.hookInterface.fields.forEach(function(field){
             if(field.type !== "file"){
                 console.log("Adding to formdata", field.id, field.value);
                 model.multipartItem.formData.append(field.id, field.value);
@@ -118,10 +119,15 @@ export class HookInterfaceComponent implements OnInit {
 
         });
 
-        this.multipartItem.formData.append("file",  this.file);
+        // Add files in
+        model.files.forEach(function(file, index){
+            model.multipartItem.formData.append("file"+index,  file);
+        });
+
+        // this.multipartItem.formData.append("file",  this.file);
 
 
-        console.log(this.multipartItem);
+        console.log(model.multipartItem);
 
         this.multipartItem.callback = this.uploadCallback;
         this.multipartItem.upload();
@@ -129,7 +135,7 @@ export class HookInterfaceComponent implements OnInit {
 
     uploadCallback = (data) => {
         console.debug("home.ts & uploadCallback() ==>");
-        this.file = null;
+        this.files = [];
         if (data){
             console.debug("home.ts & uploadCallback() upload file success.");
         }else{
@@ -176,12 +182,13 @@ export class HookInterfaceComponent implements OnInit {
 
     selectFile($event): void {
         var inputValue = $event.target;
+        var theFile = inputValue.files[0];
         if( null == inputValue || null == inputValue.files[0]){
             console.debug("Input file error.");
             return;
         }else {
-            this.file = inputValue.files[0];
-            console.debug("Input File name: " + this.file.name + " type:" + this.file.size + " size:" + this.file.size);
+            this.files.push(inputValue.files[0]);
+            console.debug("Input File name: " + theFile.name + " type:" + theFile.type + " size:" +theFile.size);
         }
     }
 

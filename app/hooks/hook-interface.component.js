@@ -25,9 +25,10 @@ var HookInterfaceComponent = (function () {
         this.endpoint = "http://insight.dev:8081/hooks/proof/create";
         this.uploader = new multipart_uploader_1.MultipartUploader({ url: "http://insight.dev:8081/hooks/proof/create" });
         this.multipartItem = new multipart_item_1.MultipartItem(this.uploader);
+        this.files = [];
         this.uploadCallback = function (data) {
             console.debug("home.ts & uploadCallback() ==>");
-            _this.file = null;
+            _this.files = [];
             if (data) {
                 console.debug("home.ts & uploadCallback() upload file success.");
             }
@@ -63,20 +64,25 @@ var HookInterfaceComponent = (function () {
         //     console.error("home.ts & upload() form invalid.");
         //     return;
         // }
-        if (this.multipartItem == null) {
-            this.multipartItem = new multipart_item_1.MultipartItem(this.uploader);
+        if (model.multipartItem == null) {
+            model.multipartItem = new multipart_item_1.MultipartItem(model.uploader);
         }
-        if (this.multipartItem.formData == null) {
-            this.multipartItem.formData = new FormData();
+        if (model.multipartItem.formData == null) {
+            model.multipartItem.formData = new FormData();
         }
-        this.hookInterface.fields.forEach(function (field) {
+        // Add form fields in
+        model.hookInterface.fields.forEach(function (field) {
             if (field.type !== "file") {
                 console.log("Adding to formdata", field.id, field.value);
                 model.multipartItem.formData.append(field.id, field.value);
             }
         });
-        this.multipartItem.formData.append("file", this.file);
-        console.log(this.multipartItem);
+        // Add files in
+        model.files.forEach(function (file, index) {
+            model.multipartItem.formData.append("file" + index, file);
+        });
+        // this.multipartItem.formData.append("file",  this.file);
+        console.log(model.multipartItem);
         this.multipartItem.callback = this.uploadCallback;
         this.multipartItem.upload();
     };
@@ -85,13 +91,14 @@ var HookInterfaceComponent = (function () {
     };
     HookInterfaceComponent.prototype.selectFile = function ($event) {
         var inputValue = $event.target;
+        var theFile = inputValue.files[0];
         if (null == inputValue || null == inputValue.files[0]) {
             console.debug("Input file error.");
             return;
         }
         else {
-            this.file = inputValue.files[0];
-            console.debug("Input File name: " + this.file.name + " type:" + this.file.size + " size:" + this.file.size);
+            this.files.push(inputValue.files[0]);
+            console.debug("Input File name: " + theFile.name + " type:" + theFile.type + " size:" + theFile.size);
         }
     };
     __decorate([
