@@ -69,17 +69,16 @@ export class HookInterfaceComponent implements OnInit {
 
     multipartItem:MultipartItem = new MultipartItem(this.uploader);
 
-    email:string;
-    password:string;
+    /**
+     * Holds files as they are added to the form.
+     * @type {Array}
+     */
     files: File[] = [];
-
-
 
     constructor(
         private hookService: HookService,
         private route: ActivatedRoute,
         private location: Location
-
     ) {
         this.multipartItem.withCredentials = false;
     }
@@ -88,10 +87,7 @@ export class HookInterfaceComponent implements OnInit {
         let model = this;
         event.preventDefault();
         console.debug("home.ts & upload() ==>");
-        // if (null == this.file || null == this.email || null == this.password){
-        //     console.error("home.ts & upload() form invalid.");
-        //     return;
-        // }
+
         if (model.multipartItem == null){
             model.multipartItem = new MultipartItem(model.uploader);
         }
@@ -113,11 +109,6 @@ export class HookInterfaceComponent implements OnInit {
             model.multipartItem.formData.append("file"+index,  file);
         });
 
-        // this.multipartItem.formData.append("file",  this.file);
-
-
-        console.log(model.multipartItem);
-
         this.multipartItem.callback = this.uploadCallback;
         this.multipartItem.upload();
     };
@@ -132,8 +123,6 @@ export class HookInterfaceComponent implements OnInit {
         }
     };
 
-
-
     @Input()
     hookInterface: HookInterface;
     @Input()
@@ -142,32 +131,7 @@ export class HookInterfaceComponent implements OnInit {
     active = true;
     submitted = false;
 
-    // onSubmit() {
-    //
-    //     this.submitted = true;
-    //     console.log("Submitting", this.hookInterface.fields);
-    //
-    //     this.hookService.makeRequest(this.hookInterface, this.hook)
-    //         .then((response) => {
-    //             console.log(response);
-    //         });
-    // }
-
-    submit = function($event) {
-        // our function body
-        $event.preventDefault();
-        console.log("uploading");
-
-        // this.onSubmit();
-
-    };
-
-
-
-    ngOnInit() {
-
-    }
-
+    ngOnInit() {}
 
     selectFile($event): void {
         var inputValue = $event.target;
@@ -180,5 +144,4 @@ export class HookInterfaceComponent implements OnInit {
             console.debug("Input File name: " + theFile.name + " type:" + theFile.type + " size:" +theFile.size);
         }
     }
-
 }

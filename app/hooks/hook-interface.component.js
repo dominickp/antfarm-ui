@@ -26,6 +26,10 @@ var HookInterfaceComponent = (function () {
         this.endpoint = "http://insight.dev:8081/hooks/proof/create";
         this.uploader = new multipart_uploader_1.MultipartUploader({ url: "http://insight.dev:8081/hooks/proof/create" });
         this.multipartItem = new multipart_item_1.MultipartItem(this.uploader);
+        /**
+         * Holds files as they are added to the form.
+         * @type {Array}
+         */
         this.files = [];
         this.uploadCallback = function (data) {
             console.debug("home.ts & uploadCallback() ==>");
@@ -39,32 +43,12 @@ var HookInterfaceComponent = (function () {
         };
         this.active = true;
         this.submitted = false;
-        // onSubmit() {
-        //
-        //     this.submitted = true;
-        //     console.log("Submitting", this.hookInterface.fields);
-        //
-        //     this.hookService.makeRequest(this.hookInterface, this.hook)
-        //         .then((response) => {
-        //             console.log(response);
-        //         });
-        // }
-        this.submit = function ($event) {
-            // our function body
-            $event.preventDefault();
-            console.log("uploading");
-            // this.onSubmit();
-        };
         this.multipartItem.withCredentials = false;
     }
     HookInterfaceComponent.prototype.upload = function (event) {
         var model = this;
         event.preventDefault();
         console.debug("home.ts & upload() ==>");
-        // if (null == this.file || null == this.email || null == this.password){
-        //     console.error("home.ts & upload() form invalid.");
-        //     return;
-        // }
         if (model.multipartItem == null) {
             model.multipartItem = new multipart_item_1.MultipartItem(model.uploader);
         }
@@ -82,14 +66,11 @@ var HookInterfaceComponent = (function () {
         model.files.forEach(function (file, index) {
             model.multipartItem.formData.append("file" + index, file);
         });
-        // this.multipartItem.formData.append("file",  this.file);
-        console.log(model.multipartItem);
         this.multipartItem.callback = this.uploadCallback;
         this.multipartItem.upload();
     };
     ;
-    HookInterfaceComponent.prototype.ngOnInit = function () {
-    };
+    HookInterfaceComponent.prototype.ngOnInit = function () { };
     HookInterfaceComponent.prototype.selectFile = function ($event) {
         var inputValue = $event.target;
         var theFile = inputValue.files[0];
