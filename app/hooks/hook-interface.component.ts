@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { FormsModule }   from '@angular/forms';
+// import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import {MultipartItem} from "../plugins/multipart-upload/multipart-item";
 import {MultipartUploader} from "../plugins/multipart-upload/multipart-uploader";
@@ -17,10 +18,15 @@ import { HookInterface } from './hook-interface';
         <form *ngIf="active" (ngSubmit)="upload()" #interfaceForm="ngForm">
         
             <div *ngFor="let field of hookInterface.fields" class="form-group">
-                <label htmlFor="{{field.id}}">{{field.name}}</label>
+            
+                <label htmlFor="{{field.id}}">
+                    {{field.name}} 
+                    <span *ngIf="field.tooltip" [tooltip]="field.tooltip" tooltipPlacement="right"
+                        class="glyphicon glyphicon-info-sign" ></span>
+                </label>
                 
-                    
                     <div [ngSwitch]="field.type">
+                    
                         <input *ngSwitchCase="'text'" type="text" class="form-control" id="{{field.id}}" 
                         placeholder="{{field.placeholder}}" name="{{field.id}}"
                         [(ngModel)]="field.value">
@@ -29,40 +35,19 @@ import { HookInterface } from './hook-interface';
                           <option *ngFor="let value of field.acceptableValues">{{value}}</option>
                         </select>
                         
-                        <!--<input *ngSwitchCase="'file'" NgFileSelect type="file" class="form-control" id="{{field.id}}" -->
-                        <!--placeholder="{{field.placeholder}}" name="{{field.id}}"-->
-                        <!--[(ngModel)]="field.value"  (onUpload)="handleUpload($event)">-->
-                        
-                        <!--<div class="file_upload" *ngSwitchCase="'file'" >-->
-                            <!--<input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" -->
-                               <!--ngFileSelect-->
-                               <!--[options]="basicOptions" -->
-                           <!---->
-                               <!--(onUpload)="handleUpload($event)"-->
-                               <!--&gt;-->
                         <div class="file_upload" *ngSwitchCase="'file'" >
                             <input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" 
-                                (change)="selectFile($event)"
-                               >
-                               
-                                <div>
-                                  Response: {{ response | json }}
-                                </div>
-                                
-                                <div>
-                                  Progress: {{ progress }}%
-                                </div>
+                                (change)="selectFile($event)">
                         </div>
-                        
-            
+ 
                         <div *ngSwitchDefault="" class="alert alert-danger" role="alert">
                             <strong>Error!</strong> Field type "{{field.type}}" is not supported.
                         </div>
                       
                     </div>
                     
-                   
-                    
+                    <p class="help-block">{{field.description}}</p>
+
                     
             </div>
              <button class="btn btn-primary" (click)="upload($event);">Submit</button>

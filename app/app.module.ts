@@ -9,15 +9,15 @@ import { DashboardComponent }     from './dashboard.component';
 import { HookService }         from './hooks/hook.service';
 import { routing } from './app.routing';
 import { HttpModule }    from '@angular/http';
-import { UPLOAD_DIRECTIVES } from 'ng2-uploader';
-
+import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         routing,
-        HttpModule
+        HttpModule,
+        TooltipModule
     ],
     declarations: [
         AppComponent,
@@ -25,7 +25,6 @@ import { UPLOAD_DIRECTIVES } from 'ng2-uploader';
         HookDetailComponent,
         HooksComponent,
         DashboardComponent,
-        UPLOAD_DIRECTIVES
     ],
     providers: [
         HookService

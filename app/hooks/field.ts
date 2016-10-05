@@ -7,5 +7,7 @@ export class Field {
     placeholder: string;
     required: boolean;
     acceptableValues: string[];
+    tooltip: string;
+    description: string;
 
 }
