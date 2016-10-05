@@ -69,7 +69,10 @@ var HookService = (function () {
     HookService.prototype.getHookInterface = function (interface_path) {
         return this.http.get(this.host + interface_path)
             .toPromise()
-            .then(function (response) { return response.json(); })
+            .then(function (response) {
+            var hi = response.json();
+            return hi;
+        })
             .catch(this.handleError);
     };
     HookService.prototype.selectFile = function ($event) {
@@ -84,7 +87,7 @@ var HookService = (function () {
             console.debug("Input File name: " + theFile.name + " type:" + theFile.type + " size:" + theFile.size);
         }
     };
-    HookService.prototype.serializeHookInterface = function (fields) {
+    HookService.prototype.serializeHookInterface = function (sessionId, fields) {
         var fieldsParam = [];
         fields.forEach(function (field) {
             var fieldObj = {
@@ -97,7 +100,7 @@ var HookService = (function () {
         fieldsParam.forEach(function (field) {
             str.push(encodeURIComponent(field.id) + "=" + encodeURIComponent(field.value));
         });
-        return "?" + str.join("&");
+        return "?sessionId=" + sessionId + "&" + str.join("&");
     };
     HookService.prototype.upload = function (event, hookInterface, hook, hookRequest, callback) {
         if (hookRequest === void 0) { hookRequest = true; }
@@ -109,12 +112,12 @@ var HookService = (function () {
         if (hookRequest === true) {
             requestMethod = hook.method.toUpperCase();
             if (hook.method.toUpperCase() === "GET") {
-                queryString = model.serializeHookInterface(hookInterface.fields);
+                queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
             }
             requestUrl = model.host + hook.path + queryString;
         }
         else {
-            queryString = model.serializeHookInterface(hookInterface.fields);
+            queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
             requestUrl = model.host + hook.interface_path + queryString;
             requestMethod = "GET";
         }

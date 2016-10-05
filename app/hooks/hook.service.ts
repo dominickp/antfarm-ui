@@ -66,7 +66,10 @@ export class HookService {
     getHookInterface(interface_path: string): Promise<HookInterface> {
         return this.http.get(this.host + interface_path)
             .toPromise()
-            .then(response => response.json() as HookInterface)
+            .then(response => {
+                let hi = response.json() as HookInterface;
+                return hi;
+            } )
             .catch(this.handleError);
     }
 
@@ -96,7 +99,7 @@ export class HookService {
         }
     }
 
-    protected serializeHookInterface(fields: Field[]){
+    protected serializeHookInterface(sessionId: string, fields: Field[]){
 
         let fieldsParam = [];
         fields.forEach(field => {
@@ -111,7 +114,7 @@ export class HookService {
         fieldsParam.forEach(field =>{
             str.push(encodeURIComponent(field.id) + "=" + encodeURIComponent(field.value))
         });
-        return "?" + str.join("&");
+        return "?sessionId="+sessionId+"&" + str.join("&");
 
     }
 
@@ -126,11 +129,11 @@ export class HookService {
         if(hookRequest === true) {
             requestMethod = hook.method.toUpperCase();
             if(hook.method.toUpperCase() === "GET") {
-                queryString = model.serializeHookInterface(hookInterface.fields);
+                queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
             }
             requestUrl = model.host + hook.path + queryString;
         } else {
-            queryString = model.serializeHookInterface(hookInterface.fields);
+            queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
             requestUrl = model.host + hook.interface_path + queryString;
             requestMethod = "GET";
         }

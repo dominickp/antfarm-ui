@@ -52,11 +52,12 @@ import { HookInterface } from './hook-interface';
                     
             </div>
             
-             <button class="btn btn-primary" (click)="upload($event);">Submit</button>
-             
             <div *ngFor="let step of hookInterface.steps">
-                <button class="btn btn-default" (click)="makeInterfaceRequest($event);">{{step.name}}</button>
+                <button *ngIf="step.complete !== true" class="btn btn-warning" (click)="makeInterfaceRequest($event);">{{step.name}}</button>
+                <hr>
             </div>
+            
+            <button class="btn btn-primary" (click)="upload($event);">Submit</button>
             
         </form>
       </div>
@@ -71,6 +72,7 @@ export class HookInterfaceComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location
     ) {
+
 
     }
 

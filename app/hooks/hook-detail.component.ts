@@ -30,6 +30,8 @@ import { HookInterface } from './hook-interface';
 })
 
 export class HookDetailComponent implements OnInit {
+
+
     constructor(
         private hookService: HookService,
         private route: ActivatedRoute,
@@ -48,6 +50,7 @@ export class HookDetailComponent implements OnInit {
                             .then(hookInterface => {
                                 this.hookInterface = hookInterface;
                                 console.log("getting interface", hookInterface);
+
                             })
                             .catch(reason => {
                                 console.log("caught", reason);

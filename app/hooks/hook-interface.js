@@ -1,6 +1,8 @@
 "use strict";
 var HookInterface = (function () {
     function HookInterface() {
+        this.stepsComplete = false;
+        this.jobs = [];
     }
     return HookInterface;
 }());
