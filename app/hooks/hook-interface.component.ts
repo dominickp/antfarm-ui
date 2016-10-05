@@ -27,6 +27,10 @@ import { HookInterface } from './hook-interface';
                 
                     <div [ngSwitch]="field.type">
                     
+                        <textarea *ngSwitchCase="'textarea'" class="form-control" id="{{field.id}}" 
+                        placeholder="{{field.placeholder}}" name="{{field.id}}"
+                        [(ngModel)]="field.value"></textarea>
+                        
                         <input *ngSwitchCase="'text'" type="text" class="form-control" id="{{field.id}}" 
                         placeholder="{{field.placeholder}}" name="{{field.id}}"
                         [(ngModel)]="field.value">
