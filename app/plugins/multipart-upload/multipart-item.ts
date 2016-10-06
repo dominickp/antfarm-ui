@@ -58,7 +58,7 @@ export class MultipartItem {
     }
 
     public onComplete(response:any, status:any, headers:any) {
-        this.callback(response);
+        this.callback(response, status);
         this.init();
     }
 
@@ -100,7 +100,7 @@ export class MultipartItem {
         this.progress = 0;
         this.index = null;
         this.onError(response, status, headers);
-        this.callback(response);
+        this.callback(response, status);
     }
 
     private _onCancel(response:any, status:any, headers:any) {

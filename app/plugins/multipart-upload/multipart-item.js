@@ -48,7 +48,7 @@ var MultipartItem = (function () {
     MultipartItem.prototype.onCancel = function (response, status, headers) {
     };
     MultipartItem.prototype.onComplete = function (response, status, headers) {
-        this.callback(response);
+        this.callback(response, status);
         this.init();
     };
     MultipartItem.prototype._onBeforeUpload = function () {
@@ -86,7 +86,7 @@ var MultipartItem = (function () {
         this.progress = 0;
         this.index = null;
         this.onError(response, status, headers);
-        this.callback(response);
+        this.callback(response, status);
     };
     MultipartItem.prototype._onCancel = function (response, status, headers) {
         this.isReady = false;

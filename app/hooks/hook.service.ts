@@ -21,7 +21,7 @@ export class HookService {
 
     private hooksCache: Hook[];
 
-    private hookResponse;
+    public hookResponse;
 
     constructor(private http: Http) {}
 
@@ -78,8 +78,10 @@ export class HookService {
 
     // Upload below
 
-    uploadCallback = (data) => {
-        this.hookResponse = data;
+    uploadCallback = (data, status) => {
+        let response = JSON.parse(data);
+        response.status = status;
+        this.hookResponse = response;
         console.debug("home.ts & uploadCallback() ==>");
         this.files = [];
         if (data){

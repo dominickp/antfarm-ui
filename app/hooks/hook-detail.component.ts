@@ -12,7 +12,21 @@ import { HookInterface } from './hook-interface';
         <div class="row">
             <div *ngIf="hookInterface" class="col-md-8">
                 <h2>{{hook.nest}} Interface</h2>
-                <hook-interface [hookInterface]="hookInterface" [hook]="hook"></hook-interface>
+                
+                <hook-interface *ngIf="! hookService.hookResponse"
+                    [hookInterface]="hookInterface" [hook]="hook"></hook-interface>
+                
+                <div *ngIf="hookService.hookResponse">
+                    <div *ngIf="hookService.hookResponse.status == 200" class="alert alert-success" role="alert">
+                        <strong>Success!</strong> {{hookService.hookResponse.message}}
+                    </div>
+                    
+                    <div *ngIf="hookService.hookResponse.status != 200" class="alert alert-danger" role="alert">
+                        <strong>Something went wrong.</strong> {{hookService.hookResponse|json}}
+                    </div>
+                    
+                </div>
+                
             </div>
             <div *ngIf="hook" class="col-md-4">
                 <h2>Details</h2>
@@ -30,7 +44,6 @@ import { HookInterface } from './hook-interface';
 })
 
 export class HookDetailComponent implements OnInit {
-
 
     constructor(
         private hookService: HookService,
