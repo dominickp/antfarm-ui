@@ -26,6 +26,7 @@ var HookService = (function () {
         this.files = [];
         // Upload below
         this.uploadCallback = function (data) {
+            _this.hookResponse = data;
             console.debug("home.ts & uploadCallback() ==>");
             _this.files = [];
             if (data) {
