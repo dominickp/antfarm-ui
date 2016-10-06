@@ -29,15 +29,15 @@ import { HookInterface } from './hook-interface';
                 
             </div>
             <div *ngIf="hook" class="col-md-4">
-                <h2>Details</h2>
-                <div><label>id: </label>{{hook.id}}</div>
-                <div><label>path: </label>{{hook.path}}</div>
-                <div><label>interface_path: </label>{{hook.interface_path}}</div>
-                <div><label>nest: </label>{{hook.nest}}</div>
-                <div><label>tunnel: </label>{{hook.tunnel}}</div>
-                <div>
-                    <label>method: </label> {{hook.method}}
-                </div>
+                <h4>Webhook Details</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Tunnel:</strong> {{hook.tunnel}}</li>
+                    <li class="list-group-item"><strong>Nest:</strong> {{hook.nest}}</li>
+                    <li class="list-group-item"><strong>ID:</strong> {{hook.id}}</li>
+                    <li class="list-group-item"><strong>Path:</strong> {{hook.path}}</li>
+                    <li class="list-group-item"><strong>Interface Path:</strong> {{hook.interface_path}}</li>
+                    <li class="list-group-item"><strong>Method:</strong> {{hook.method.toUpperCase()}}</li>
+                </ul>
             </div>
         </div>
     `
