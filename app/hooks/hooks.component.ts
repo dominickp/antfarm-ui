@@ -15,7 +15,7 @@ import {collectEventListeners} from "@angular/compiler/src/view_compiler/event_b
           <a *ngFor="let hook of hooks" class="list-group-item" 
             [class.active]="hook === selectedHook"
             href="/route/{{hook.id}}">
-            <span class="badge">{{hook.id}}</span> {{hook.nest}}
+            <span class="badge">{{hook.nest}}</span> {{hook.tunnel}}
           </a>
         </div>
       `,

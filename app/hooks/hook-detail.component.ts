@@ -11,7 +11,7 @@ import { HookInterface } from './hook-interface';
     template: `
         <div class="row">
             <div *ngIf="hookInterface" class="col-md-8">
-                <h2>{{hook.nest}} Interface</h2>
+                <h2>{{hook.tunnel}} interface</h2>
                 
                 <hook-interface *ngIf="! hookService.hookResponse"
                     [hookInterface]="hookInterface" [hook]="hook"></hook-interface>
