@@ -1,1 +1,1 @@
-{"version":3,"file":"hook-interface.js","sourceRoot":"","sources":["hook-interface.ts"],"names":[],"mappings":";AAGA;IAAA;QAII,kBAAa,GAAY,KAAK,CAAC;QAM/B,SAAI,GAAG,EAAE,CAAC;IAEd,CAAC;IAAD,oBAAC;AAAD,CAAC,AAZD,IAYC;AAZY,qBAAa,gBAYzB,CAAA"}
+{"version":3,"file":"hook-interface.js","sourceRoot":"","sources":["hook-interface.ts"],"names":[],"mappings":";AAGA;IAAA;QAII,kBAAa,GAAY,KAAK,CAAC;QAM/B,SAAI,GAAG,EAAE,CAAC;IAId,CAAC;IAAD,oBAAC;AAAD,CAAC,AAdD,IAcC;AAdY,qBAAa,gBAczB,CAAA"}

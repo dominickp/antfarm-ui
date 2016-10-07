@@ -13,4 +13,6 @@ export class HookInterface {
 
     jobs = [];
 
+    metadata: any;
+
 }

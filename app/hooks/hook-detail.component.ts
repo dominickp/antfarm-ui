@@ -11,7 +11,13 @@ import { HookInterface } from './hook-interface';
     template: `
         <div class="row">
             <div *ngIf="hookInterface" class="col-md-8">
-                <h2>{{hook.tunnel}} interface</h2>
+                <h2>
+                    {{hook.tunnel}} interface
+                    <small><span *ngIf="hookInterface.metadata.tooltip" [tooltip]="hookInterface.metadata.tooltip" tooltipPlacement="right"
+                        class="glyphicon glyphicon-info-sign" ></span></small>
+                </h2>
+                
+                <p *ngIf="hookInterface.metadata.description" class="help-block">{{hookInterface.metadata.description}}</p>
                 
                 <hook-interface *ngIf="! hookService.hookResponse"
                     [hookInterface]="hookInterface" [hook]="hook"></hook-interface>
@@ -29,7 +35,14 @@ import { HookInterface } from './hook-interface';
                 
             </div>
             <div *ngIf="hook" class="col-md-4">
-                <h4>Webhook Details</h4>
+                <div *ngIf="hookInterface && hookInterface.metadata && hookInterface.metadata.interfaceProperties">
+                    <h4>Metadata properties</h4>
+                    <li *ngFor="let prop of hookInterface.metadata.interfaceProperties" class="list-group-item">
+                        <strong>{{prop.key}}:</strong> {{prop.value}}
+                    </li>
+                </div>
+                
+                <h4>Webhook details</h4>
                 <ul class="list-group">
                     <li class="list-group-item"><strong>Tunnel:</strong> {{hook.tunnel}}</li>
                     <li class="list-group-item"><strong>Nest:</strong> {{hook.nest}}</li>
