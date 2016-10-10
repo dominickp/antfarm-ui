@@ -24,7 +24,7 @@ import { HookInterface } from './hook-interface';
                     {{hookService.getInterface().metadata.description}}
                 </p>
                 
-                <hook-interface *ngIf="! hookService.hookResponse"></hook-interface>
+                <hook-interface-form *ngIf="! hookService.hookResponse"></hook-interface-form>
                 
                 <div *ngIf="hookService.hookResponse">
                     <div *ngIf="hookService.hookResponse.status == 200" class="alert alert-success" role="alert">

@@ -3,7 +3,7 @@ import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { AppComponent }        from './app.component';
 import { HookDetailComponent } from './hooks/hook-detail.component';
-import { HookInterfaceComponent } from './hooks/hook-interface.component';
+import { HookInterfaceFormComponent } from './hooks/hook-interface-form.component';
 import { HooksComponent }     from './hooks/hooks.component';
 import { DashboardComponent }     from './dashboard.component';
 import { HookService }         from './hooks/hook.service';
@@ -23,7 +23,7 @@ import {HookDetailsComponent} from "./hooks/hook-details.component";
     ],
     declarations: [
         AppComponent,
-        HookInterfaceComponent,
+        HookInterfaceFormComponent,
         HookInterfaceMetadataComponent,
         HookDetailComponent,
         HookDetailsComponent,

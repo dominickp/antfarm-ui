@@ -9,7 +9,7 @@ import { Hook } from './hook';
 import { HookInterface } from './hook-interface';
 
 @Component({
-    selector: 'hook-interface',
+    selector: 'hook-interface-form',
     template: `
       <div *ngIf="hookService.getInterface()">
         <form *ngIf="active" (ngSubmit)="upload()" #interfaceForm="ngForm">
@@ -64,7 +64,7 @@ import { HookInterface } from './hook-interface';
     `
 })
 
-export class HookInterfaceComponent implements OnInit {
+export class HookInterfaceFormComponent implements OnInit {
 
 
     constructor(
