@@ -61,7 +61,7 @@ var HookService = (function () {
     // protected findHook(hook) {
     //     return hook.id === 'cherries';
     // }
-    HookService.prototype.getHook = function (id) {
+    HookService.prototype.loadHook = function (id) {
         return this.getHooks()
             .then(function (hooks) {
             return hooks.find(function (hook, index, hooks) {
@@ -105,10 +105,11 @@ var HookService = (function () {
         });
         return "?sessionId=" + sessionId + "&" + str.join("&");
     };
-    HookService.prototype.upload = function (event, hook, hookRequest, callback) {
+    HookService.prototype.upload = function (event, hookRequest, callback) {
         if (hookRequest === void 0) { hookRequest = true; }
         var model = this;
         var hookInterface = model.getInterface();
+        var hook = model.getHook();
         // If GET, serialize interface values into URL
         var queryString = "";
         // Determine request URL
@@ -162,6 +163,12 @@ var HookService = (function () {
     };
     HookService.prototype.getInterface = function () {
         return this.hookInterface;
+    };
+    HookService.prototype.setHook = function (h) {
+        this.hook = h;
+    };
+    HookService.prototype.getHook = function () {
+        return this.hook;
     };
     HookService = __decorate([
         core_1.Injectable(), 

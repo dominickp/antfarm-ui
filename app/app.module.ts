@@ -11,6 +11,7 @@ import { routing } from './app.routing';
 import { HttpModule }    from '@angular/http';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {HookInterfaceMetadataComponent} from "./hooks/hook-interface-metadata.component";
+import {HookDetailsComponent} from "./hooks/hook-details.component";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {HookInterfaceMetadataComponent} from "./hooks/hook-interface-metadata.co
         HookInterfaceComponent,
         HookInterfaceMetadataComponent,
         HookDetailComponent,
+        HookDetailsComponent,
         HooksComponent,
         DashboardComponent,
     ],

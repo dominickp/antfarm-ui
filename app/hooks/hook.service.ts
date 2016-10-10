@@ -19,11 +19,13 @@ export class HookService {
     private multipartItem: MultipartItem;
     private uploader: MultipartUploader;
 
-    private hooksCache: Hook[];
-
-    public hookResponse;
+    // private hooksCache: Hook[];
 
     public hookInterface: HookInterface;
+
+    public hook: Hook;
+
+    public hookResponse;
 
     constructor(private http: Http) {}
 
@@ -58,7 +60,7 @@ export class HookService {
     //     return hook.id === 'cherries';
     // }
 
-    getHook(id: string): Promise<Hook> {
+    loadHook(id: string): Promise<Hook> {
         return this.getHooks()
             .then((hooks) => {
                 return hooks.find((hook, index, hooks) => {
@@ -125,9 +127,10 @@ export class HookService {
 
     }
 
-    upload (event, hook: Hook, hookRequest = true, callback?: any) {
+    upload (event, hookRequest = true, callback?: any) {
         let model = this;
         let hookInterface = model.getInterface();
+        let hook = model.getHook();
 
         // If GET, serialize interface values into URL
         let queryString = "";
@@ -190,6 +193,14 @@ export class HookService {
 
     public getInterface() {
         return this.hookInterface;
+    }
+
+    public setHook(h: Hook) {
+        this.hook = h;
+    }
+
+    public getHook() {
+        return this.hook;
     }
 
 }

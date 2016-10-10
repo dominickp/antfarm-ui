@@ -13,25 +13,27 @@ var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 // import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 var hook_service_1 = require('./hook.service');
-var hook_1 = require('./hook');
 var HookInterfaceComponent = (function () {
     function HookInterfaceComponent(hookService, route, location) {
         this.hookService = hookService;
         this.route = route;
         this.location = location;
+        //
+        // @Input()
+        // hook: Hook;
         this.active = true;
         this.submitted = false;
     }
     HookInterfaceComponent.prototype.upload = function (event) {
         var model = this;
         event.preventDefault();
-        model.hookService.upload(event, model.hook);
+        model.hookService.upload(event);
     };
     ;
     HookInterfaceComponent.prototype.makeInterfaceRequest = function (event) {
         var model = this;
         event.preventDefault();
-        model.hookService.upload(event, model.hook, false, function (data) {
+        model.hookService.upload(event, false, function (data) {
             if (data) {
                 console.log(data);
                 model.hookService.setInterface(JSON.parse(data));
@@ -42,10 +44,6 @@ var HookInterfaceComponent = (function () {
         });
     };
     HookInterfaceComponent.prototype.ngOnInit = function () { };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', hook_1.Hook)
-    ], HookInterfaceComponent.prototype, "hook", void 0);
     HookInterfaceComponent = __decorate([
         core_1.Component({
             selector: 'hook-interface',

@@ -77,14 +77,14 @@ export class HookInterfaceComponent implements OnInit {
         let model = this;
         event.preventDefault();
 
-        model.hookService.upload(event, model.hook);
+        model.hookService.upload(event);
     };
 
     makeInterfaceRequest(event) {
         let model = this;
         event.preventDefault();
 
-        model.hookService.upload(event, model.hook, false, (data) => {
+        model.hookService.upload(event, false, (data) => {
 
             if (data) {
                 console.log(data);
@@ -97,9 +97,9 @@ export class HookInterfaceComponent implements OnInit {
         });
 
     }
-
-    @Input()
-    hook: Hook;
+    //
+    // @Input()
+    // hook: Hook;
 
     active = true;
     submitted = false;

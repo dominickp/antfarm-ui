@@ -12,7 +12,7 @@ import { HookInterface } from './hook-interface';
         <div class="row">
             <div *ngIf="hookService.getInterface()" class="col-md-8">
                 <h2>
-                    {{hook.tunnel}} interface
+                    {{hookService.getHook().tunnel}} interface
                     <small>
                     <span *ngIf="hookService.getInterface().metadata.tooltip" 
                         [tooltip]="hookService.getInterface().metadata.tooltip" tooltipPlacement="right"
@@ -24,7 +24,7 @@ import { HookInterface } from './hook-interface';
                     {{hookService.getInterface().metadata.description}}
                 </p>
                 
-                <hook-interface *ngIf="! hookService.hookResponse" [hook]="hook"></hook-interface>
+                <hook-interface *ngIf="! hookService.hookResponse"></hook-interface>
                 
                 <div *ngIf="hookService.hookResponse">
                     <div *ngIf="hookService.hookResponse.status == 200" class="alert alert-success" role="alert">
@@ -43,18 +43,10 @@ import { HookInterface } from './hook-interface';
                 <hook-interface-metadata></hook-interface-metadata>
             </div>
             
-            <div *ngIf="hook" class="col-md-4">
-                
-                <h4>Webhook details</h4>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Tunnel:</strong> {{hook.tunnel}}</li>
-                    <li class="list-group-item"><strong>Nest:</strong> {{hook.nest}}</li>
-                    <li class="list-group-item"><strong>ID:</strong> {{hook.id}}</li>
-                    <li class="list-group-item"><strong>Path:</strong> {{hook.path}}</li>
-                    <li class="list-group-item"><strong>Interface Path:</strong> {{hook.interface_path}}</li>
-                    <li class="list-group-item"><strong>Method:</strong> {{hook.method.toUpperCase()}}</li>
-                </ul>
+            <div class="col-md-4">
+                <hook-details></hook-details>
             </div>
+
         </div>
     `
 })
@@ -70,10 +62,11 @@ export class HookDetailComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params['id'];
-            this.hookService.getHook(id)
+            this.hookService.loadHook(id)
                 .then((hook) => {
                     if(hook){
-                        this.hook = hook;
+                        // this.hook = hook;
+                        this.hookService.setHook(hook);
                         console.log(this.hook);
                         this.hookService.getHookInterface(hook.interface_path)
                             .then(hookInterface => {
