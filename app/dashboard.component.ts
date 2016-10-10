@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Hook } from './hooks/hook';
-import { HookService } from './hooks/hook.service';
+import { Hook } from './hook/hook';
+import { HookService } from './hook/hook.service';
 
 @Component({
     moduleId: module.id,

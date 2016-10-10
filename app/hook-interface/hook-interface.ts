@@ -1,4 +1,4 @@
-import {Field} from "./field";
+import {Field} from "../hook/field";
 import {Step} from "./step";
 import {InterfaceMetadata} from "./interface-metadata";
 

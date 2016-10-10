@@ -7,7 +7,7 @@ import {MultipartUploader} from "../plugins/multipart-upload/multipart-uploader"
 import 'rxjs/add/operator/toPromise';
 
 import { Hook } from './hook';
-import {HookInterface} from "./hook-interface";
+import {HookInterface} from "../hook-interface/hook-interface";
 import {Field} from "./field";
 
 @Injectable()

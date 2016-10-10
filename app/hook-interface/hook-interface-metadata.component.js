@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
-var hook_service_1 = require('./hook.service');
+var hook_service_1 = require('../hook/hook.service');
 var HookInterfaceMetadataComponent = (function () {
     function HookInterfaceMetadataComponent(hookService, route, location) {
         this.hookService = hookService;

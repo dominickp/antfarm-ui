@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 
-import { HookService } from './hook.service';
+import { HookService } from '../hook/hook.service';
 
 @Component({
     selector: 'hook-interface-metadata',

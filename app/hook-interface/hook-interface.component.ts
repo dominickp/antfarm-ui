@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
-import { Location }                 from '@angular/common';
 
-import { HookService } from './hook.service';
-import { Hook } from './hook';
-import { HookInterface } from './hook-interface';
+import { HookService } from '../hook/hook.service';
+import { Hook } from '../hook/hook';
 
 @Component({
     selector: 'hook-interface',
@@ -55,8 +53,7 @@ export class HookInterfaceComponent implements OnInit {
 
     constructor(
         private hookService: HookService,
-        private route: ActivatedRoute,
-        private location: Location
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit(): void {
@@ -67,7 +64,6 @@ export class HookInterfaceComponent implements OnInit {
                     if(hook){
                         // this.hook = hook;
                         this.hookService.setHook(hook);
-                        console.log(this.hook);
                         this.hookService.getHookInterface(hook.interface_path)
                             .then(hookInterface => {
                                 this.hookService.setInterface(hookInterface);
@@ -92,5 +88,4 @@ export class HookInterfaceComponent implements OnInit {
 
     @Input()
     hook: Hook;
-    hookInterface: HookInterface;
 }

@@ -4,8 +4,8 @@ import { Location }                 from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 // import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
-import { HookService } from './hook.service';
-import { Hook } from './hook';
+import { HookService } from '../hook/hook.service';
+import { Hook } from '../hook/hook';
 import { HookInterface } from './hook-interface';
 
 @Component({

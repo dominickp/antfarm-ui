@@ -1,7 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
-import { Location }                 from '@angular/common';
-
+import { Component } from '@angular/core';
 import { HookService } from './hook.service';
 
 @Component({
@@ -21,12 +18,6 @@ import { HookService } from './hook.service';
         `
 })
 
-export class HookDetailsComponent implements OnInit {
-
-    constructor(
-        private hookService: HookService,
-        private route: ActivatedRoute,
-        private location: Location
-    ) {}
-    ngOnInit() {}
+export class HookDetailsComponent {
+    constructor(private hookService: HookService) {}
 }

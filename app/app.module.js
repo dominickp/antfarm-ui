@@ -12,16 +12,16 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var app_component_1 = require('./app.component');
-var hook_interface_component_1 = require('./hooks/hook-interface.component');
-var hook_interface_form_component_1 = require('./hooks/hook-interface-form.component');
-var hooks_component_1 = require('./hooks/hooks.component');
+var hook_interface_component_1 = require('./hook-interface/hook-interface.component');
+var hook_interface_form_component_1 = require('./hook-interface/hook-interface-form.component');
+var hooks_component_1 = require('./hook/hooks.component');
 var dashboard_component_1 = require('./dashboard.component');
-var hook_service_1 = require('./hooks/hook.service');
+var hook_service_1 = require('./hook/hook.service');
 var app_routing_1 = require('./app.routing');
 var http_1 = require('@angular/http');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
-var hook_interface_metadata_component_1 = require("./hooks/hook-interface-metadata.component");
-var hook_details_component_1 = require("./hooks/hook-details.component");
+var hook_interface_metadata_component_1 = require("./hook-interface/hook-interface-metadata.component");
+var hook_details_component_1 = require("./hook/hook-details.component");
 var AppModule = (function () {
     function AppModule() {
     }

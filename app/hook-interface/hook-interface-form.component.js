@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 // import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
-var hook_service_1 = require('./hook.service');
+var hook_service_1 = require('../hook/hook.service');
 var HookInterfaceFormComponent = (function () {
     function HookInterfaceFormComponent(hookService, route, location) {
         this.hookService = hookService;
