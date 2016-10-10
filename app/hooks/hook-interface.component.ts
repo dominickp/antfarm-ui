@@ -7,7 +7,7 @@ import { Hook } from './hook';
 import { HookInterface } from './hook-interface';
 
 @Component({
-    selector: 'my-hook-detail',
+    selector: 'hook-interface',
     template: `
         <div class="row">
             <div *ngIf="hookService.getInterface()" class="col-md-8">
@@ -51,7 +51,7 @@ import { HookInterface } from './hook-interface';
     `
 })
 
-export class HookDetailComponent implements OnInit {
+export class HookInterfaceComponent implements OnInit {
 
     constructor(
         private hookService: HookService,

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HooksComponent }      from './hooks/hooks.component';
 import { DashboardComponent }      from './dashboard.component';
-import { HookDetailComponent }      from './hooks/hook-detail.component';
+import { HookInterfaceComponent }      from './hooks/hook-interface.component';
 
 const appRoutes: Routes = [
     {
@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'route/:id',
-        component: HookDetailComponent
+        component: HookInterfaceComponent
     },
     {
         path: '',

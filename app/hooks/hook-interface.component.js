@@ -13,13 +13,13 @@ var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 var hook_service_1 = require('./hook.service');
 var hook_1 = require('./hook');
-var HookDetailComponent = (function () {
-    function HookDetailComponent(hookService, route, location) {
+var HookInterfaceComponent = (function () {
+    function HookInterfaceComponent(hookService, route, location) {
         this.hookService = hookService;
         this.route = route;
         this.location = location;
     }
-    HookDetailComponent.prototype.ngOnInit = function () {
+    HookInterfaceComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.forEach(function (params) {
             var id = params['id'];
@@ -50,15 +50,15 @@ var HookDetailComponent = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', hook_1.Hook)
-    ], HookDetailComponent.prototype, "hook", void 0);
-    HookDetailComponent = __decorate([
+    ], HookInterfaceComponent.prototype, "hook", void 0);
+    HookInterfaceComponent = __decorate([
         core_1.Component({
-            selector: 'my-hook-detail',
+            selector: 'hook-interface',
             template: "\n        <div class=\"row\">\n            <div *ngIf=\"hookService.getInterface()\" class=\"col-md-8\">\n                <h2>\n                    {{hookService.getHook().tunnel}} interface\n                    <small>\n                    <span *ngIf=\"hookService.getInterface().metadata.tooltip\" \n                        [tooltip]=\"hookService.getInterface().metadata.tooltip\" tooltipPlacement=\"right\"\n                        class=\"glyphicon glyphicon-info-sign\" ></span>\n                    </small>\n                </h2>\n                \n                <p *ngIf=\"hookService.getInterface().metadata.description\" class=\"help-block\">\n                    {{hookService.getInterface().metadata.description}}\n                </p>\n                \n                <hook-interface-form *ngIf=\"! hookService.hookResponse\"></hook-interface-form>\n                \n                <div *ngIf=\"hookService.hookResponse\">\n                    <div *ngIf=\"hookService.hookResponse.status == 200\" class=\"alert alert-success\" role=\"alert\">\n                        <strong>Success!</strong> {{hookService.hookResponse.message}}\n                    </div>\n                    \n                    <div *ngIf=\"hookService.hookResponse.status != 200\" class=\"alert alert-danger\" role=\"alert\">\n                        <strong>Something went wrong.</strong> {{hookService.hookResponse|json}}\n                    </div>\n                    \n                </div>\n                \n            </div>\n            \n            <div class=\"col-md-4\">\n                <hook-interface-metadata></hook-interface-metadata>\n            </div>\n            \n            <div class=\"col-md-4\">\n                <hook-details></hook-details>\n            </div>\n\n        </div>\n    "
         }), 
         __metadata('design:paramtypes', [hook_service_1.HookService, router_1.ActivatedRoute, common_1.Location])
-    ], HookDetailComponent);
-    return HookDetailComponent;
+    ], HookInterfaceComponent);
+    return HookInterfaceComponent;
 }());
-exports.HookDetailComponent = HookDetailComponent;
-//# sourceMappingURL=hook-detail.component.js.map
+exports.HookInterfaceComponent = HookInterfaceComponent;
+//# sourceMappingURL=hook-interface.component.js.map

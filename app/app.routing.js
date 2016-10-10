@@ -2,7 +2,7 @@
 var router_1 = require('@angular/router');
 var hooks_component_1 = require('./hooks/hooks.component');
 var dashboard_component_1 = require('./dashboard.component');
-var hook_detail_component_1 = require('./hooks/hook-detail.component');
+var hook_interface_component_1 = require('./hooks/hook-interface.component');
 var appRoutes = [
     {
         path: 'hooks',
@@ -14,7 +14,7 @@ var appRoutes = [
     },
     {
         path: 'route/:id',
-        component: hook_detail_component_1.HookDetailComponent
+        component: hook_interface_component_1.HookInterfaceComponent
     },
     {
         path: '',
