@@ -13,11 +13,16 @@ import { HookInterface } from './hook-interface';
             <div *ngIf="hookService.getInterface()" class="col-md-8">
                 <h2>
                     {{hook.tunnel}} interface
-                    <small><span *ngIf="hookService.getInterface().metadata.tooltip" [tooltip]="hookService.getInterface().metadata.tooltip" tooltipPlacement="right"
-                        class="glyphicon glyphicon-info-sign" ></span></small>
+                    <small>
+                    <span *ngIf="hookService.getInterface().metadata.tooltip" 
+                        [tooltip]="hookService.getInterface().metadata.tooltip" tooltipPlacement="right"
+                        class="glyphicon glyphicon-info-sign" ></span>
+                    </small>
                 </h2>
                 
-                <p *ngIf="hookService.getInterface().metadata.description" class="help-block">{{hookService.getInterface().metadata.description}}</p>
+                <p *ngIf="hookService.getInterface().metadata.description" class="help-block">
+                    {{hookService.getInterface().metadata.description}}
+                </p>
                 
                 <hook-interface *ngIf="! hookService.hookResponse" [hook]="hook"></hook-interface>
                 

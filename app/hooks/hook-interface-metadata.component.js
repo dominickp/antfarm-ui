@@ -22,7 +22,7 @@ var HookInterfaceMetadataComponent = (function () {
     HookInterfaceMetadataComponent = __decorate([
         core_1.Component({
             selector: 'hook-interface-metadata',
-            template: "\n        <div *ngIf=\"hookService.getInterface()\">\n            hookInterface available\n            <div *ngIf=\"hookService.getInterface().metadata\">\n                <h4>Metadata properties</h4>\n                    \n                <ul class=\"list-group\" *ngIf=\"hookService.getInterface().metadata.interfaceProperties\">                    \n                    <li *ngFor=\"let prop of hookService.getInterface().metadata.interfaceProperties\" class=\"list-group-item\">\n                        <strong>{{prop.key}}:</strong> {{prop.value}}\n                    </li>\n                </ul>\n            </div>\n        </div>\n        "
+            template: "\n        <div *ngIf=\"hookService.getInterface()\">\n\n            <div *ngIf=\"hookService.getInterface().metadata\">\n                <h4>Metadata properties</h4>\n                    \n                <ul class=\"list-group\" *ngIf=\"hookService.getInterface().metadata.interfaceProperties\">                    \n                    <li *ngFor=\"let prop of hookService.getInterface().metadata.interfaceProperties\" class=\"list-group-item\">\n                        <strong>{{prop.key}}:</strong> {{prop.value}}\n                    </li>\n                </ul>\n            </div>\n            \n        </div>\n        "
         }), 
         __metadata('design:paramtypes', [hook_service_1.HookService, router_1.ActivatedRoute, common_1.Location])
     ], HookInterfaceMetadataComponent);

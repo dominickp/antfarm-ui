@@ -8,7 +8,7 @@ import { HookService } from './hook.service';
     selector: 'hook-interface-metadata',
     template: `
         <div *ngIf="hookService.getInterface()">
-            hookInterface available
+
             <div *ngIf="hookService.getInterface().metadata">
                 <h4>Metadata properties</h4>
                     
@@ -18,6 +18,7 @@ import { HookService } from './hook.service';
                     </li>
                 </ul>
             </div>
+            
         </div>
         `
         })
