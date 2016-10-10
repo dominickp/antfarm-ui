@@ -11,6 +11,7 @@ import { Hook } from '../hook/hook';
             <div *ngIf="hookService.getInterface()" class="col-md-8">
                 <h2>
                     {{hookService.getHook().tunnel}} interface
+                    <span class="badge">{{hookService.getInterface().sessionId}}</span>
                     <small>
                     <span *ngIf="hookService.getInterface().metadata.tooltip" 
                         [tooltip]="hookService.getInterface().metadata.tooltip" tooltipPlacement="right"
