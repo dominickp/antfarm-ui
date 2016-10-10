@@ -20,6 +20,7 @@ var hook_service_1 = require('./hooks/hook.service');
 var app_routing_1 = require('./app.routing');
 var http_1 = require('@angular/http');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
+var hook_interface_metadata_component_1 = require("./hooks/hook-interface-metadata.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,6 +36,7 @@ var AppModule = (function () {
             declarations: [
                 app_component_1.AppComponent,
                 hook_interface_component_1.HookInterfaceComponent,
+                hook_interface_metadata_component_1.HookInterfaceMetadataComponent,
                 hook_detail_component_1.HookDetailComponent,
                 hooks_component_1.HooksComponent,
                 dashboard_component_1.DashboardComponent,

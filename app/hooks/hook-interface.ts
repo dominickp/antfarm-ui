@@ -1,5 +1,6 @@
 import {Field} from "./field";
 import {Step} from "./step";
+import {InterfaceMetadata} from "./interface-metadata";
 
 export class HookInterface {
 
@@ -13,6 +14,6 @@ export class HookInterface {
 
     jobs = [];
 
-    metadata: any;
+    metadata: InterfaceMetadata;
 
 }

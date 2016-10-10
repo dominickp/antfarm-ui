@@ -11,10 +11,10 @@ import { HookInterface } from './hook-interface';
 @Component({
     selector: 'hook-interface',
     template: `
-      <div *ngIf="hookInterface">
+      <div *ngIf="hookService.getInterface()">
         <form *ngIf="active" (ngSubmit)="upload()" #interfaceForm="ngForm">
         
-            <div *ngFor="let field of hookInterface.fields" class="form-group">
+            <div *ngFor="let field of hookService.getInterface().fields" class="form-group">
             
                 <label htmlFor="{{field.id}}">
                     {{field.name}} 
@@ -52,7 +52,7 @@ import { HookInterface } from './hook-interface';
                     
             </div>
             
-            <div *ngFor="let step of hookInterface.steps">
+            <div *ngFor="let step of hookService.getInterface().steps">
                 <button *ngIf="step.complete !== true" class="btn btn-warning" (click)="makeInterfaceRequest($event);">{{step.name}}</button>
                 <hr>
             </div>
@@ -71,27 +71,24 @@ export class HookInterfaceComponent implements OnInit {
         private hookService: HookService,
         private route: ActivatedRoute,
         private location: Location
-    ) {
-
-
-    }
+    ) {}
 
     upload (event) {
         let model = this;
         event.preventDefault();
 
-        model.hookService.upload(event, model.hookInterface, model.hook);
+        model.hookService.upload(event, model.hook);
     };
 
     makeInterfaceRequest(event) {
         let model = this;
         event.preventDefault();
 
-        model.hookService.upload(event, model.hookInterface, model.hook, false, (data) => {
+        model.hookService.upload(event, model.hook, false, (data) => {
 
             if (data) {
                 console.log(data);
-                model.hookInterface = JSON.parse(data) as HookInterface;
+                model.hookService.setInterface(JSON.parse(data) as HookInterface);
             } else {
                 console.error("No data returned!");
             }
@@ -101,8 +98,6 @@ export class HookInterfaceComponent implements OnInit {
 
     }
 
-    @Input()
-    hookInterface: HookInterface;
     @Input()
     hook: Hook;
 

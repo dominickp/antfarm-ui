@@ -10,17 +10,16 @@ import { HookInterface } from './hook-interface';
     selector: 'my-hook-detail',
     template: `
         <div class="row">
-            <div *ngIf="hookInterface" class="col-md-8">
+            <div *ngIf="hookService.getInterface()" class="col-md-8">
                 <h2>
                     {{hook.tunnel}} interface
-                    <small><span *ngIf="hookInterface.metadata.tooltip" [tooltip]="hookInterface.metadata.tooltip" tooltipPlacement="right"
+                    <small><span *ngIf="hookService.getInterface().metadata.tooltip" [tooltip]="hookService.getInterface().metadata.tooltip" tooltipPlacement="right"
                         class="glyphicon glyphicon-info-sign" ></span></small>
                 </h2>
                 
-                <p *ngIf="hookInterface.metadata.description" class="help-block">{{hookInterface.metadata.description}}</p>
+                <p *ngIf="hookService.getInterface().metadata.description" class="help-block">{{hookService.getInterface().metadata.description}}</p>
                 
-                <hook-interface *ngIf="! hookService.hookResponse"
-                    [hookInterface]="hookInterface" [hook]="hook"></hook-interface>
+                <hook-interface *ngIf="! hookService.hookResponse" [hook]="hook"></hook-interface>
                 
                 <div *ngIf="hookService.hookResponse">
                     <div *ngIf="hookService.hookResponse.status == 200" class="alert alert-success" role="alert">
@@ -34,13 +33,12 @@ import { HookInterface } from './hook-interface';
                 </div>
                 
             </div>
+            
+            <div class="col-md-4">
+                <hook-interface-metadata></hook-interface-metadata>
+            </div>
+            
             <div *ngIf="hook" class="col-md-4">
-                <div *ngIf="hookInterface && hookInterface.metadata && hookInterface.metadata.interfaceProperties">
-                    <h4>Metadata properties</h4>
-                    <li *ngFor="let prop of hookInterface.metadata.interfaceProperties" class="list-group-item">
-                        <strong>{{prop.key}}:</strong> {{prop.value}}
-                    </li>
-                </div>
                 
                 <h4>Webhook details</h4>
                 <ul class="list-group">
@@ -74,7 +72,7 @@ export class HookDetailComponent implements OnInit {
                         console.log(this.hook);
                         this.hookService.getHookInterface(hook.interface_path)
                             .then(hookInterface => {
-                                this.hookInterface = hookInterface;
+                                this.hookService.setInterface(hookInterface);
                                 console.log("getting interface", hookInterface);
 
                             })

@@ -105,9 +105,10 @@ var HookService = (function () {
         });
         return "?sessionId=" + sessionId + "&" + str.join("&");
     };
-    HookService.prototype.upload = function (event, hookInterface, hook, hookRequest, callback) {
+    HookService.prototype.upload = function (event, hook, hookRequest, callback) {
         if (hookRequest === void 0) { hookRequest = true; }
         var model = this;
+        var hookInterface = model.getInterface();
         // If GET, serialize interface values into URL
         var queryString = "";
         // Determine request URL
@@ -156,6 +157,12 @@ var HookService = (function () {
         this.multipartItem.upload();
     };
     ;
+    HookService.prototype.setInterface = function (i) {
+        this.hookInterface = i;
+    };
+    HookService.prototype.getInterface = function () {
+        return this.hookInterface;
+    };
     HookService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

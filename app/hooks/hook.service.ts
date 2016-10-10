@@ -16,12 +16,14 @@ export class HookService {
     private host = "http://localhost:8081";
     private hooks_path = '/hooks';  // URL to web api
 
-    private multipartItem:MultipartItem;
-    private uploader:MultipartUploader;
+    private multipartItem: MultipartItem;
+    private uploader: MultipartUploader;
 
     private hooksCache: Hook[];
 
     public hookResponse;
+
+    public hookInterface: HookInterface;
 
     constructor(private http: Http) {}
 
@@ -123,8 +125,9 @@ export class HookService {
 
     }
 
-    upload (event, hookInterface: HookInterface, hook: Hook, hookRequest = true, callback?: any) {
+    upload (event, hook: Hook, hookRequest = true, callback?: any) {
         let model = this;
+        let hookInterface = model.getInterface();
 
         // If GET, serialize interface values into URL
         let queryString = "";
@@ -181,5 +184,12 @@ export class HookService {
         this.multipartItem.upload();
     };
 
+    public setInterface(i: HookInterface) {
+        this.hookInterface = i;
+    }
+
+    public getInterface() {
+        return this.hookInterface;
+    }
 
 }

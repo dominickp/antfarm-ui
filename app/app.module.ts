@@ -10,6 +10,7 @@ import { HookService }         from './hooks/hook.service';
 import { routing } from './app.routing';
 import { HttpModule }    from '@angular/http';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
+import {HookInterfaceMetadataComponent} from "./hooks/hook-interface-metadata.component";
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
     declarations: [
         AppComponent,
         HookInterfaceComponent,
+        HookInterfaceMetadataComponent,
         HookDetailComponent,
         HooksComponent,
         DashboardComponent,
