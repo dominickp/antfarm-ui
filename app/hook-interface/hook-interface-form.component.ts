@@ -53,8 +53,12 @@ import { HookInterface } from './hook-interface';
             </div>
             
             <div *ngFor="let step of hookService.getInterface().steps">
+                <div *ngIf="step.failure" class="alert alert-warning" role="alert">
+                    <strong>Step validation warning!</strong> {{step.failure}}
+                </div>
+
                 <button *ngIf="step.complete !== true" class="btn btn-warning" (click)="makeInterfaceRequest($event);">{{step.name}}</button>
-                <hr>
+                <hr *ngIf="step.complete !== true">
             </div>
             
             <button class="btn btn-primary" (click)="upload($event);">Submit</button>
