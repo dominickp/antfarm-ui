@@ -32,7 +32,7 @@ var HookInterfaceComponent = (function () {
                         console.log("getting interface", hookInterface);
                     })
                         .catch(function (reason) {
-                        console.log("caught", reason);
+                        console.log("caught1", reason);
                     });
                 }
                 else {
@@ -40,7 +40,7 @@ var HookInterfaceComponent = (function () {
                 }
             })
                 .catch(function (reason) {
-                console.log("caught", reason);
+                console.log("caught2", reason);
             });
         });
     };

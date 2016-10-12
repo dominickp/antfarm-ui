@@ -72,7 +72,7 @@ export class HookInterfaceComponent implements OnInit {
 
                             })
                             .catch(reason => {
-                                console.log("caught", reason);
+                                console.log("caught1", reason);
                                 }
                             );
                     } else {
@@ -81,7 +81,7 @@ export class HookInterfaceComponent implements OnInit {
 
                 })
                 .catch(reason => {
-                        console.log("caught", reason);
+                        console.log("caught2", reason);
                     }
                 );
         });

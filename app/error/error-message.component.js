@@ -9,22 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var error_service_1 = require("./error/error.service");
-var AppComponent = (function () {
-    function AppComponent(errorService) {
+var error_service_1 = require("./error.service");
+var ErrorMessageComponent = (function () {
+    function ErrorMessageComponent(errorService) {
         this.errorService = errorService;
-        this.title = 'Antfarm Interface';
     }
-    ;
-    AppComponent = __decorate([
+    ErrorMessageComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "\n       <h1>{{title}}</h1>\n       <ul class=\"nav nav-pills\">\n         <li role=\"presentation\"><a routerLink=\"/dashboard\">Dashboard</a></li>\n         <li role=\"presentation\"><a routerLink=\"/hooks\">Hooks</a></li>\n       </ul>\n       <error-message></error-message>\n       <router-outlet></router-outlet>\n     ",
-            providers: [error_service_1.ErrorService]
+            moduleId: module.id,
+            selector: 'error-message',
+            template: "\n        <div *ngIf=\"errorService.message\" class=\"alert alert-danger\">\n            <strong>Error!</strong> {{ errorService.message }}\n        </div>\n      ",
+            styles: [],
+            providers: []
         }), 
         __metadata('design:paramtypes', [error_service_1.ErrorService])
-    ], AppComponent);
-    return AppComponent;
+    ], ErrorMessageComponent);
+    return ErrorMessageComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.ErrorMessageComponent = ErrorMessageComponent;
+//# sourceMappingURL=error-message.component.js.map

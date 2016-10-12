@@ -10,31 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var hook_service_1 = require('./hook.service');
+var error_service_1 = require("../error/error.service");
 var HooksComponent = (function () {
-    function HooksComponent(hookService) {
+    function HooksComponent(hookService, errorService) {
         this.hookService = hookService;
+        this.errorService = errorService;
         this.title = 'Available Hooks';
     }
     HooksComponent.prototype.ngOnInit = function () {
         this.getHooks();
     };
     HooksComponent.prototype.getHooks = function () {
-        var _this = this;
-        this.hookService.getHooks()
-            .then(function (hooks) { return _this.hooks = hooks; })
+        var h = this;
+        h.hookService.getHooks()
+            .then(function (hooks) { return h.hooks = hooks; })
             .catch(function (reason) {
-            console.log("caught", reason);
+            console.log("caughtx", reason);
+            h.errorService.message = "Could not load the hooks from the Antfarm server.";
         });
     };
     HooksComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'available-hooks',
-            template: "\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{hook.id}}\">\n            <span class=\"badge\">{{hook.nest}}</span> {{hook.tunnel}}\n          </a>\n        </div>\n      ",
+            template: "\n    <div *ngIf=\"hooks\">\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{hook.id}}\">\n            <span class=\"badge\">{{hook.nest}}</span> {{hook.tunnel}}\n          </a>\n        </div>\n    </div>\n      ",
             styles: [],
             providers: [hook_service_1.HookService]
         }), 
-        __metadata('design:paramtypes', [hook_service_1.HookService])
+        __metadata('design:paramtypes', [hook_service_1.HookService, error_service_1.ErrorService])
     ], HooksComponent);
     return HooksComponent;
 }());

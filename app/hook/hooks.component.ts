@@ -4,12 +4,14 @@ import { OnInit } from '@angular/core';
 import { Hook } from './hook';
 import { HookService } from './hook.service';
 import {collectEventListeners} from "@angular/compiler/src/view_compiler/event_binder";
+import {ErrorService} from "../error/error.service";
 
 
 @Component({
     moduleId: module.id,
     selector: 'available-hooks',
     template:`
+    <div *ngIf="hooks">
       <h2>My Hooks</h2>
         <div class="hooks list-group">
           <a *ngFor="let hook of hooks" class="list-group-item" 
@@ -18,6 +20,7 @@ import {collectEventListeners} from "@angular/compiler/src/view_compiler/event_b
             <span class="badge">{{hook.nest}}</span> {{hook.tunnel}}
           </a>
         </div>
+    </div>
       `,
     styles: [],
     providers: [HookService]
@@ -26,17 +29,22 @@ import {collectEventListeners} from "@angular/compiler/src/view_compiler/event_b
 
 export class HooksComponent implements OnInit {
 
-    constructor(private hookService: HookService) { }
+    constructor(
+        private hookService: HookService,
+        private errorService: ErrorService
+    ) { }
 
     ngOnInit(): void {
         this.getHooks();
     }
 
     getHooks(): void {
-        this.hookService.getHooks()
-            .then(hooks => this.hooks = hooks)
+        let h = this;
+        h.hookService.getHooks()
+            .then(hooks => h.hooks = hooks)
             .catch(reason => {
-                console.log("caught", reason)
+                console.log("caughtx", reason);
+                h.errorService.message = "Could not load the hooks from the Antfarm server.";
             });
     }
 

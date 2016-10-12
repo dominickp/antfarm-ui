@@ -22,6 +22,8 @@ var http_1 = require('@angular/http');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var hook_interface_metadata_component_1 = require("./hook-interface/hook-interface-metadata.component");
 var hook_details_component_1 = require("./hook/hook-details.component");
+var error_service_1 = require("./error/error.service");
+var error_message_component_1 = require("./error/error-message.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -41,10 +43,12 @@ var AppModule = (function () {
                 hook_interface_component_1.HookInterfaceComponent,
                 hook_details_component_1.HookDetailsComponent,
                 hooks_component_1.HooksComponent,
+                error_message_component_1.ErrorMessageComponent,
                 dashboard_component_1.DashboardComponent,
             ],
             providers: [
-                hook_service_1.HookService
+                hook_service_1.HookService,
+                error_service_1.ErrorService
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
