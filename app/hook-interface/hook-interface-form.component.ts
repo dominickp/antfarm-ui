@@ -26,21 +26,21 @@ import { HookInterface } from './hook-interface';
                 
                     <textarea *ngSwitchCase="'textarea'" class="form-control" id="{{field.id}}" 
                     placeholder="{{field.placeholder}}" name="{{field.id}}"
-                    [(ngModel)]="field.value" [attr.readonly]="field.readonly ? true : null">
+                    [(ngModel)]="field.value" [attr.readonly]="field.readOnly ? true : null">
                         {{field.defaultValue}}
                     </textarea>
                     
                     <input *ngSwitchCase="'text'" type="text" class="form-control" id="{{field.id}}" 
                     placeholder="{{field.placeholder}}" name="{{field.id}}" value="{{field.defaultValue}}"
-                    [(ngModel)]="field.value" [attr.readonly]="field.readonly ? true : null">
+                    [(ngModel)]="field.value" [attr.readonly]="field.readOnly ? true : null">
                     
                     <select *ngSwitchCase="'select'" id="{{field.id}}" name="{{field.id}}" 
-                        [attr.readonly]="field.readonly ? true : null" class="form-control">
+                        [attr.readonly]="field.readOnly ? true : null" class="form-control">
                         <!-- Add default value -->
                       <option *ngFor="let value of field.acceptableValues">{{value}}</option>
                     </select>
                     
-                    <div class="file_upload" *ngSwitchCase="'file'" [attr.readonly]="field.readonly ? true : null">
+                    <div class="file_upload" *ngSwitchCase="'file'" [attr.readonly]="field.readOnly ? true : null">
                         <input type="file" name="{{field.id}}" id="{{field.id}}" class="form-control" 
                             (change)="hookService.selectFile($event)">
                     </div>

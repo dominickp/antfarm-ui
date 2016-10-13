@@ -10,6 +10,6 @@ export class Field {
     tooltip: string;
     description: string;
     defaultValue: string;
-    readonly: boolean;
+    readOnly: boolean;
 
 }
