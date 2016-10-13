@@ -61,7 +61,7 @@ import { HookInterface } from './hook-interface';
                 <hr *ngIf="step.complete !== true">
             </div>
             
-            <button class="btn btn-primary" (click)="upload($event);">Submit</button>
+            <button *ngIf="hookService.getInterface().steps.length === 0" class="btn btn-primary" (click)="upload($event);">Submit</button>
             
         </form>
       </div>
