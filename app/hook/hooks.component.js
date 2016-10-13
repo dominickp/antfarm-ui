@@ -23,9 +23,11 @@ var HooksComponent = (function () {
     HooksComponent.prototype.getHooks = function () {
         var h = this;
         h.hookService.getHooks()
-            .then(function (hooks) { return h.hooks = hooks; })
+            .then(function (hooks) {
+            h.hooks = hooks;
+            h.errorService.message = "";
+        })
             .catch(function (reason) {
-            console.log("caughtx", reason);
             h.errorService.message = "Could not load the hooks from the Antfarm server.";
         });
     };

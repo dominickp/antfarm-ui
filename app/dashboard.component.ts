@@ -16,8 +16,8 @@ export class DashboardComponent implements OnInit {
     constructor(private hookService: HookService) { }
 
     ngOnInit(): void {
-        this.hookService.getHooks()
-            .then(hooks => this.hooks = hooks.slice(1, 5));
+        // this.hookService.getHooks()
+        //     .then(hooks => this.hooks = hooks.slice(1, 5));
     }
 
     gotoDetail(hook: Hook): void { /* not implemented yet */}

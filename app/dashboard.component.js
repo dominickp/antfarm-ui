@@ -16,9 +16,8 @@ var DashboardComponent = (function () {
         this.hooks = [];
     }
     DashboardComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.hookService.getHooks()
-            .then(function (hooks) { return _this.hooks = hooks.slice(1, 5); });
+        // this.hookService.getHooks()
+        //     .then(hooks => this.hooks = hooks.slice(1, 5));
     };
     DashboardComponent.prototype.gotoDetail = function (hook) { };
     DashboardComponent = __decorate([

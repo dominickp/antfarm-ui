@@ -41,9 +41,11 @@ export class HooksComponent implements OnInit {
     getHooks(): void {
         let h = this;
         h.hookService.getHooks()
-            .then(hooks => h.hooks = hooks)
+            .then(hooks => {
+                h.hooks = hooks;
+                h.errorService.message = "";
+            })
             .catch(reason => {
-                console.log("caughtx", reason);
                 h.errorService.message = "Could not load the hooks from the Antfarm server.";
             });
     }
