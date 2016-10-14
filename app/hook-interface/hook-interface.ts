@@ -1,6 +1,7 @@
 import {Field} from "../hook/field";
 import {Step} from "./step";
 import {InterfaceMetadata} from "./interface-metadata";
+import {HeldJob} from "./held-job";
 
 export class HookInterface {
 
@@ -12,7 +13,7 @@ export class HookInterface {
 
     steps: Step[];
 
-    jobs = [];
+    heldJobs: HeldJob[];
 
     metadata: InterfaceMetadata;
 

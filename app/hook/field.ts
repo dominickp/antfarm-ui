@@ -6,7 +6,7 @@ export class Field {
     value: any;
     placeholder: string;
     required: boolean;
-    acceptableValues: string[];
+    valueList: string[];
     tooltip: string;
     description: string;
     defaultValue: string;

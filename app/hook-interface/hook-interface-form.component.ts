@@ -35,9 +35,9 @@ import { HookInterface } from './hook-interface';
                     [(ngModel)]="field.value" [attr.readonly]="field.readOnly ? true : null">
                     
                     <select *ngSwitchCase="'select'" id="{{field.id}}" name="{{field.id}}" 
-                        [attr.readonly]="field.readOnly ? true : null" class="form-control">
+                        [attr.readonly]="field.readOnly ? true : null" [(ngModel)]="field.value" class="form-control">
                         <!-- Add default value -->
-                      <option *ngFor="let value of field.acceptableValues">{{value}}</option>
+                      <option *ngFor="let value of field.valueList">{{value}}</option>
                     </select>
                     
                     <div class="file_upload" *ngSwitchCase="'file'" [attr.readonly]="field.readOnly ? true : null">
@@ -53,6 +53,14 @@ import { HookInterface } from './hook-interface';
                     
                 <p class="help-block">{{field.description}}</p>
                     
+            </div>
+            
+            <!-- Held jobs dropdown, NEED TO BE A FIELD TO SERIALIZE PROPERLY -->
+            <div *ngIf="hookService.getInterface().heldJobs">
+                <select name="process_held_job_id" id="process_held_job_id" class="form-control" [(ngModel)]="hookService.getInterface().fields.process">
+                  <option *ngFor="let job of hookService.getInterface().heldJobs" value="{{job.id}}">{{job.name}}</option>
+                </select>
+                <hr>
             </div>
             
             <div *ngFor="let step of hookService.getInterface().steps">
