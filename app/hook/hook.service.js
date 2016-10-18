@@ -90,7 +90,7 @@ var HookService = (function () {
             console.debug("Input File name: " + theFile.name + " type:" + theFile.type + " size:" + theFile.size);
         }
     };
-    HookService.prototype.serializeHookInterface = function (sessionId, fields) {
+    HookService.prototype.serializeHookInterface = function (sessionId, fields, heldJobs) {
         var fieldsParam = [];
         fields.forEach(function (field) {
             var fieldObj = {
@@ -103,6 +103,17 @@ var HookService = (function () {
         fieldsParam.forEach(function (field) {
             str.push(encodeURIComponent(field.id) + "=" + encodeURIComponent(field.value));
         });
+        if (heldJobs) {
+            var heldJobsParam_1 = [];
+            heldJobs.forEach(function (job) {
+                if (job.process === true) {
+                    heldJobsParam_1.push(job.id);
+                }
+            });
+            heldJobsParam_1.forEach(function (jobId) {
+                str.push("processHeld=" + encodeURIComponent(jobId));
+            });
+        }
         return "?sessionId=" + sessionId + "&" + str.join("&");
     };
     HookService.prototype.upload = function (event, hookRequest, callback) {
@@ -117,12 +128,12 @@ var HookService = (function () {
         if (hookRequest === true) {
             requestMethod = hook.method.toUpperCase();
             if (hook.method.toUpperCase() === "GET") {
-                queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
+                queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields, hookInterface.heldJobs);
             }
             requestUrl = model.host + hook.path + queryString;
         }
         else {
-            queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
+            queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields, hookInterface.heldJobs);
             requestUrl = model.host + hook.interface_path + queryString;
             requestMethod = "GET";
         }

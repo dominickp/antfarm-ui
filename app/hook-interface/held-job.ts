@@ -6,4 +6,6 @@ export interface HeldJob {
 
     path:string;
 
+    process:boolean;
+
 }

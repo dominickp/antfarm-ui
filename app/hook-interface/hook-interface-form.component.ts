@@ -57,8 +57,10 @@ import { HookInterface } from './hook-interface';
             
             <!-- Held jobs dropdown, NEED TO BE A FIELD TO SERIALIZE PROPERLY -->
             <div *ngIf="hookService.getInterface().heldJobs">
-                <select name="process_held_job_id" id="process_held_job_id" class="form-control" [(ngModel)]="hookService.getInterface().fields.process">
-                  <option *ngFor="let job of hookService.getInterface().heldJobs" value="{{job.id}}">{{job.name}}</option>
+                <select name="process_held_job_id" id="process_held_job_id" class="form-control" multiple
+                    [ngModel]="hookService.getInterface().heldJobs" (ngModelChange)="heldJobChange($event)">
+                  <option *ngFor="let job of hookService.getInterface().heldJobs" value="{{job.id}}"
+                  [selected]="job.process === true">{{job.name}}</option>
                 </select>
                 <hr>
             </div>
@@ -109,6 +111,20 @@ export class HookInterfaceFormComponent implements OnInit {
             }
 
 
+        });
+
+    }
+
+    heldJobChange(jobIds) {
+        console.log(jobIds);
+        let heldJobs = this.hookService.hookInterface.heldJobs;
+
+        jobIds.forEach(jobId => {
+            heldJobs.forEach(heldJob => {
+                if(heldJob.id === jobId){
+                    heldJob.process = true;
+                }
+            });
         });
 
     }

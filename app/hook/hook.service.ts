@@ -9,6 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import { Hook } from './hook';
 import {HookInterface} from "../hook-interface/hook-interface";
 import {Field} from "./field";
+import {HeldJob} from "../hook-interface/held-job";
 
 @Injectable()
 export class HookService {
@@ -108,7 +109,7 @@ export class HookService {
         }
     }
 
-    protected serializeHookInterface(sessionId: string, fields: Field[]){
+    protected serializeHookInterface(sessionId: string, fields: Field[], heldJobs?: HeldJob[]){
 
         let fieldsParam = [];
         fields.forEach(field => {
@@ -123,6 +124,21 @@ export class HookService {
         fieldsParam.forEach(field =>{
             str.push(encodeURIComponent(field.id) + "=" + encodeURIComponent(field.value))
         });
+
+        if(heldJobs) {
+
+            let heldJobsParam = [];
+            heldJobs.forEach(job => {
+                if (job.process === true) {
+                    heldJobsParam.push(job.id);
+                }
+            });
+
+            heldJobsParam.forEach(jobId => {
+                str.push("processHeld=" + encodeURIComponent(jobId));
+            })
+        }
+
         return "?sessionId="+sessionId+"&" + str.join("&");
 
     }
@@ -140,11 +156,11 @@ export class HookService {
         if(hookRequest === true) {
             requestMethod = hook.method.toUpperCase();
             if(hook.method.toUpperCase() === "GET") {
-                queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
+                queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields, hookInterface.heldJobs);
             }
             requestUrl = model.host + hook.path + queryString;
         } else {
-            queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields);
+            queryString = model.serializeHookInterface(hookInterface.sessionId, hookInterface.fields, hookInterface.heldJobs);
             requestUrl = model.host + hook.interface_path + queryString;
             requestMethod = "GET";
         }
