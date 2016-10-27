@@ -156,6 +156,12 @@ var HookService = (function () {
                 model.multipartItem.formData.append(field.id, field.value);
             }
         });
+        // Add held jobs that were selected in
+        hookInterface.heldJobs.forEach(function (heldJob) {
+            if (heldJob.process === true) {
+                model.multipartItem.formData.append("process", heldJob.id);
+            }
+        });
         // Add files in
         model.files.forEach(function (file, index) {
             model.multipartItem.formData.append("file" + index, file);
