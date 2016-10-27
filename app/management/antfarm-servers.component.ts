@@ -8,7 +8,10 @@ import {AntfarmServer} from "./antfarm-server";
     selector: 'antfarm-servers',
     template: `<h2>Antfarm servers</h2>
                 <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let server of servers">{{server.host}}:{{server.port}}</li>
+                    <li class="list-group-item" *ngFor="let server of servers; let i = index">
+                        {{server.host}}:{{server.port}}
+                        <button class="btn btn-danger btn-xs pull-right" (click)="deleteServer(i)">&times;</button>
+                    </li>
                 </ul>
 
               <h3>Add server</h3>
@@ -42,17 +45,29 @@ export class AntfarmServersComponent {
 
     protected addServerForm = { host: null, port: null };
 
+    protected getServer(index: number) {
+        return this.servers[index];
+    }
+
+    public deleteServer(index: number) {
+        let asc = this;
+        asc.servers.splice(index, 1);
+        asc.updateServerStorage();
+    }
+
+    public updateServerStorage() {
+        let asc = this;
+        asc.storageService.save("servers", asc.servers);
+    }
+
     public addServer(event) {
         let asc = this;
         event.preventDefault();
-
-        console.log(this.addServerForm);
 
         let server = new AntfarmServer(asc.addServerForm.host, asc.addServerForm.port);
 
         asc.servers.push(server);
 
-        asc.storageService.save("servers", asc.servers);
-
+        asc.updateServerStorage();
     }
 }
