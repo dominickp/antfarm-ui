@@ -10,11 +10,13 @@ import { Hook } from './hook';
 import {HookInterface} from "../hook-interface/hook-interface";
 import {Field} from "./field";
 import {HeldJob} from "../hook-interface/held-job";
+import {AntfarmServer} from "../management/antfarm-server";
+import {LocalStorageService} from "../local-storage/local-storage.service";
 
 @Injectable()
 export class HookService {
 
-    private host = "http://localhost:8081";
+    private host = null;
     private hooks_path = '/hooks';  // URL to web api
 
     private multipartItem: MultipartItem;
@@ -28,13 +30,49 @@ export class HookService {
 
     public hookResponse;
 
-    constructor(private http: Http) {}
+    protected servers: AntfarmServer[];
+
+    constructor(private http: Http, private storageService: LocalStorageService) {
+        this.servers = storageService.get("servers") as AntfarmServer[] || [];
+    }
+
+    public getServer(index: number) {
+        return this.servers[index] as AntfarmServer;
+    }
+
+    public getServers() {
+        return this.servers;
+    }
+
+    public addServer(server: AntfarmServer) {
+        this.servers.push(server);
+        this.updateServerStorage();
+    }
+
+    public deleteServer(index: number) {
+        this.servers.splice(index, 1);
+        this.updateServerStorage();
+    }
+
+    public setActiveServerId(index: number) {
+        let s = this;
+        s.setActiveServer(s.getServer(index));
+    }
+    public setActiveServer(server: AntfarmServer) {
+        this.host = `http://${server.host}:${server.port}`;
+    }
+
+    public updateServerStorage() {
+        let s = this;
+        s.storageService.save("servers", s.servers);
+    }
 
     /**
      * Holds files as they are added to the form.
      * @type {Array}
      */
     files: File[] = [];
+
 
     getHooks(): Promise<Hook[]> {
         return this.http.get(this.host + this.hooks_path)

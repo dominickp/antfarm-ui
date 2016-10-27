@@ -5,6 +5,9 @@ import { Hook } from './hook';
 import { HookService } from './hook.service';
 import {collectEventListeners} from "@angular/compiler/src/view_compiler/event_binder";
 import {ErrorService} from "../error/error.service";
+import {ActivatedRoute, Params} from "@angular/router";
+import {LocalStorageService} from "../local-storage/local-storage.service";
+import {AntfarmServer} from "../management/antfarm-server";
 
 
 @Component({
@@ -16,7 +19,7 @@ import {ErrorService} from "../error/error.service";
         <div class="hooks list-group">
           <a *ngFor="let hook of hooks" class="list-group-item" 
             [class.active]="hook === selectedHook"
-            href="/route/{{hook.id}}">
+            href="/route/{{selectedServer}}/{{hook.id}}">
             <span class="badge">{{hook.nest}}</span> {{hook.tunnel}}
           </a>
         </div>
@@ -29,13 +32,26 @@ import {ErrorService} from "../error/error.service";
 
 export class HooksComponent implements OnInit {
 
+    selectedServer: number;
+
     constructor(
         private hookService: HookService,
-        private errorService: ErrorService
-    ) { }
+        private errorService: ErrorService,
+        private route: ActivatedRoute
+    ) {}
+
+
 
     ngOnInit(): void {
-        this.getHooks();
+
+        let hc = this;
+        hc.route.params.forEach((params: Params) => {
+            hc.selectedServer = params['serverIndex'];
+            hc.hookService.setActiveServerId(hc.selectedServer);
+            hc.getHooks();
+        });
+
+
     }
 
     getHooks(): void {

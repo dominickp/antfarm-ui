@@ -7,7 +7,7 @@ import { HookInterfaceComponent }      from './hook-interface/hook-interface.com
 
 const appRoutes: Routes = [
     {
-        path: 'hooks',
+        path: 'hooks/:serverIndex',
         component: HooksComponent
     },
     {
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
         component: DashboardComponent
     },
     {
-        path: 'route/:id',
+        path: 'route/:serverIndex/:id',
         component: HookInterfaceComponent
     },
     {

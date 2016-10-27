@@ -21,6 +21,8 @@ var HookInterfaceComponent = (function () {
         var _this = this;
         this.route.params.forEach(function (params) {
             var id = params['id'];
+            var serverIndex = params['serverIndex'];
+            _this.hookService.setActiveServerId(serverIndex);
             _this.hookService.loadHook(id)
                 .then(function (hook) {
                 if (hook) {

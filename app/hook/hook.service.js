@@ -13,11 +13,13 @@ var http_1 = require('@angular/http');
 var multipart_item_1 = require("../plugins/multipart-upload/multipart-item");
 var multipart_uploader_1 = require("../plugins/multipart-upload/multipart-uploader");
 require('rxjs/add/operator/toPromise');
+var local_storage_service_1 = require("../local-storage/local-storage.service");
 var HookService = (function () {
-    function HookService(http) {
+    function HookService(http, storageService) {
         var _this = this;
         this.http = http;
-        this.host = "http://localhost:8081";
+        this.storageService = storageService;
+        this.host = null;
         this.hooks_path = '/hooks'; // URL to web api
         /**
          * Holds files as they are added to the form.
@@ -39,7 +41,33 @@ var HookService = (function () {
                 console.error("home.ts & uploadCallback() upload file false.");
             }
         };
+        this.servers = storageService.get("servers") || [];
     }
+    HookService.prototype.getServer = function (index) {
+        return this.servers[index];
+    };
+    HookService.prototype.getServers = function () {
+        return this.servers;
+    };
+    HookService.prototype.addServer = function (server) {
+        this.servers.push(server);
+        this.updateServerStorage();
+    };
+    HookService.prototype.deleteServer = function (index) {
+        this.servers.splice(index, 1);
+        this.updateServerStorage();
+    };
+    HookService.prototype.setActiveServerId = function (index) {
+        var s = this;
+        s.setActiveServer(s.getServer(index));
+    };
+    HookService.prototype.setActiveServer = function (server) {
+        this.host = "http://" + server.host + ":" + server.port;
+    };
+    HookService.prototype.updateServerStorage = function () {
+        var s = this;
+        s.storageService.save("servers", s.servers);
+    };
     HookService.prototype.getHooks = function () {
         return this.http.get(this.host + this.hooks_path)
             .toPromise()
@@ -189,7 +217,7 @@ var HookService = (function () {
     };
     HookService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, local_storage_service_1.LocalStorageService])
     ], HookService);
     return HookService;
 }());

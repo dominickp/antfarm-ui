@@ -11,14 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var hook_service_1 = require('./hook.service');
 var error_service_1 = require("../error/error.service");
+var router_1 = require("@angular/router");
 var HooksComponent = (function () {
-    function HooksComponent(hookService, errorService) {
+    function HooksComponent(hookService, errorService, route) {
         this.hookService = hookService;
         this.errorService = errorService;
+        this.route = route;
         this.title = 'Available Hooks';
     }
     HooksComponent.prototype.ngOnInit = function () {
-        this.getHooks();
+        var hc = this;
+        hc.route.params.forEach(function (params) {
+            hc.selectedServer = params['serverIndex'];
+            hc.hookService.setActiveServerId(hc.selectedServer);
+            hc.getHooks();
+        });
     };
     HooksComponent.prototype.getHooks = function () {
         var h = this;
@@ -35,11 +42,11 @@ var HooksComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'available-hooks',
-            template: "\n    <div *ngIf=\"hooks\">\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{hook.id}}\">\n            <span class=\"badge\">{{hook.nest}}</span> {{hook.tunnel}}\n          </a>\n        </div>\n    </div>\n      ",
+            template: "\n    <div *ngIf=\"hooks\">\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{selectedServer}}/{{hook.id}}\">\n            <span class=\"badge\">{{hook.nest}}</span> {{hook.tunnel}}\n          </a>\n        </div>\n    </div>\n      ",
             styles: [],
             providers: [hook_service_1.HookService]
         }), 
-        __metadata('design:paramtypes', [hook_service_1.HookService, error_service_1.ErrorService])
+        __metadata('design:paramtypes', [hook_service_1.HookService, error_service_1.ErrorService, router_1.ActivatedRoute])
     ], HooksComponent);
     return HooksComponent;
 }());

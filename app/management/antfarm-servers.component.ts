@@ -8,9 +8,10 @@ import {AntfarmServer} from "./antfarm-server";
     selector: 'antfarm-servers',
     template: `<h2>Antfarm servers</h2>
                 <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let server of servers; let i = index">
+                    <li class="list-group-item" *ngFor="let server of hookService.getServers(); let i = index">
                         {{server.host}}:{{server.port}}
-                        <button class="btn btn-danger btn-xs pull-right" (click)="deleteServer(i)">&times;</button>
+                        <a class="btn btn-primary btn-sm" href="hooks/{{i}}">View hooks</a>
+                        <button class="btn btn-danger btn-xs pull-right" (click)="hookService.deleteServer(i)">&times;</button>
                     </li>
                 </ul>
 
@@ -33,41 +34,20 @@ import {AntfarmServer} from "./antfarm-server";
 
 export class AntfarmServersComponent {
 
-    servers: AntfarmServer[];
+    constructor(private hookService: HookService){
 
-    constructor(private hookService: HookService, private storageService: LocalStorageService ){
-        this.servers = storageService.get("servers") as AntfarmServer[] || [];
-
-        console.log(this.servers);
     }
 
     protected fb = new FormBuilder();
 
     protected addServerForm = { host: null, port: null };
 
-    protected getServer(index: number) {
-        return this.servers[index];
-    }
-
-    public deleteServer(index: number) {
-        let asc = this;
-        asc.servers.splice(index, 1);
-        asc.updateServerStorage();
-    }
-
-    public updateServerStorage() {
-        let asc = this;
-        asc.storageService.save("servers", asc.servers);
-    }
 
     public addServer(event) {
         let asc = this;
         event.preventDefault();
-
-        let server = new AntfarmServer(asc.addServerForm.host, asc.addServerForm.port);
-
-        asc.servers.push(server);
-
-        asc.updateServerStorage();
+        let server = {host: asc.addServerForm.host, port: asc.addServerForm.port} as AntfarmServer;
+        console.log("about to add", server);
+        asc.hookService.addServer(server);
     }
 }

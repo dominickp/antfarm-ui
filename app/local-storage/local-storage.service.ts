@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 export class LocalStorageService {
 
     save(name,data){
-        let localData= localStorage.getItem('antfarm-ui');
+        let localData = localStorage.getItem('antfarm-ui') as any;
         if(localData){
             localData = JSON.parse(localData);
-        }else{
+        } else {
             localData = {};
         }
 

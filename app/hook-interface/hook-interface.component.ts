@@ -60,6 +60,8 @@ export class HookInterfaceComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params['id'];
+            let serverIndex = params['serverIndex'];
+            this.hookService.setActiveServerId(serverIndex);
             this.hookService.loadHook(id)
                 .then((hook) => {
                     if(hook){
@@ -89,4 +91,5 @@ export class HookInterfaceComponent implements OnInit {
 
     @Input()
     hook: Hook;
+
 }

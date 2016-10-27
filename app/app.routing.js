@@ -5,7 +5,7 @@ var dashboard_component_1 = require('./dashboard.component');
 var hook_interface_component_1 = require('./hook-interface/hook-interface.component');
 var appRoutes = [
     {
-        path: 'hooks',
+        path: 'hooks/:serverIndex',
         component: hooks_component_1.HooksComponent
     },
     {
@@ -13,7 +13,7 @@ var appRoutes = [
         component: dashboard_component_1.DashboardComponent
     },
     {
-        path: 'route/:id',
+        path: 'route/:serverIndex/:id',
         component: hook_interface_component_1.HookInterfaceComponent
     },
     {
