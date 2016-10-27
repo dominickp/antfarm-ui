@@ -12,3 +12,7 @@ h2, h3 {
 body {
     margin: 2em;
 }
+
+.preloader img{
+    width: 50px;
+}

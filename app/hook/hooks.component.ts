@@ -14,9 +14,14 @@ import {AntfarmServer} from "../management/antfarm-server";
     moduleId: module.id,
     selector: 'available-hooks',
     template:`
+
+    <div *ngIf="requestPending" class="preloader">
+        <img src="img/loader.gif" title="Loading" alt="Loading">
+    </div>
     <div *ngIf="hooks">
       <h2>My Hooks</h2>
         <div class="hooks list-group">
+            
           <a *ngFor="let hook of hooks" class="list-group-item" 
             [class.active]="hook === selectedHook"
             href="/route/{{selectedServer}}/{{hook.id}}">
@@ -32,6 +37,7 @@ import {AntfarmServer} from "../management/antfarm-server";
 
 export class HooksComponent implements OnInit {
 
+    requestPending: boolean = true;
     selectedServer: number;
 
     constructor(
@@ -60,9 +66,11 @@ export class HooksComponent implements OnInit {
             .then(hooks => {
                 h.hooks = hooks;
                 h.errorService.message = "";
+                h.requestPending = false;
             })
             .catch(reason => {
                 h.errorService.message = "Could not load the hooks from the Antfarm server.";
+                h.requestPending = false;
             });
     }
 

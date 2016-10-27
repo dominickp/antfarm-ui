@@ -17,6 +17,7 @@ var HooksComponent = (function () {
         this.hookService = hookService;
         this.errorService = errorService;
         this.route = route;
+        this.requestPending = true;
         this.title = 'Available Hooks';
     }
     HooksComponent.prototype.ngOnInit = function () {
@@ -33,16 +34,18 @@ var HooksComponent = (function () {
             .then(function (hooks) {
             h.hooks = hooks;
             h.errorService.message = "";
+            h.requestPending = false;
         })
             .catch(function (reason) {
             h.errorService.message = "Could not load the hooks from the Antfarm server.";
+            h.requestPending = false;
         });
     };
     HooksComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'available-hooks',
-            template: "\n    <div *ngIf=\"hooks\">\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{selectedServer}}/{{hook.id}}\">\n            <span class=\"badge\">{{hook.nest}}</span> {{hook.tunnel}}\n          </a>\n        </div>\n    </div>\n      ",
+            template: "\n\n    <div *ngIf=\"requestPending\" class=\"preloader\">\n        <img src=\"img/loader.gif\" title=\"Loading\" alt=\"Loading\">\n    </div>\n    <div *ngIf=\"hooks\">\n      <h2>My Hooks</h2>\n        <div class=\"hooks list-group\">\n            \n          <a *ngFor=\"let hook of hooks\" class=\"list-group-item\" \n            [class.active]=\"hook === selectedHook\"\n            href=\"/route/{{selectedServer}}/{{hook.id}}\">\n            <span class=\"badge\">{{hook.nest}}</span> {{hook.tunnel}}\n          </a>\n        </div>\n    </div>\n      ",
             styles: [],
             providers: [hook_service_1.HookService]
         }), 
