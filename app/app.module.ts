@@ -14,6 +14,8 @@ import {HookInterfaceMetadataComponent} from "./hook-interface/hook-interface-me
 import {HookDetailsComponent} from "./hook/hook-details.component";
 import {ErrorService} from "./error/error.service";
 import {ErrorMessageComponent} from "./error/error-message.component";
+import {LocalStorageService} from "./local-storage/local-storage.service";
+import {AntfarmServersComponent} from "./management/antfarm-servers.component";
 
 @NgModule({
     imports: [
@@ -32,11 +34,13 @@ import {ErrorMessageComponent} from "./error/error-message.component";
         HooksComponent,
         ErrorMessageComponent,
         DashboardComponent,
+        AntfarmServersComponent
     ],
     providers: [
         HookService,
-        ErrorService
-    ],
+        ErrorService,
+        LocalStorageService
+],
     bootstrap: [ AppComponent ]
 })
 export class AppModule {

@@ -24,7 +24,8 @@ var DashboardComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'my-dashboard',
-            templateUrl: 'dashboard.component.html',
+            // templateUrl: 'dashboard.component.html',
+            template: "<div></div><antfarm-servers></antfarm-servers>"
         }), 
         __metadata('design:paramtypes', [hook_service_1.HookService])
     ], DashboardComponent);

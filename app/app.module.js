@@ -24,6 +24,8 @@ var hook_interface_metadata_component_1 = require("./hook-interface/hook-interfa
 var hook_details_component_1 = require("./hook/hook-details.component");
 var error_service_1 = require("./error/error.service");
 var error_message_component_1 = require("./error/error-message.component");
+var local_storage_service_1 = require("./local-storage/local-storage.service");
+var antfarm_servers_component_1 = require("./management/antfarm-servers.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -45,10 +47,12 @@ var AppModule = (function () {
                 hooks_component_1.HooksComponent,
                 error_message_component_1.ErrorMessageComponent,
                 dashboard_component_1.DashboardComponent,
+                antfarm_servers_component_1.AntfarmServersComponent
             ],
             providers: [
                 hook_service_1.HookService,
-                error_service_1.ErrorService
+                error_service_1.ErrorService,
+                local_storage_service_1.LocalStorageService
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
